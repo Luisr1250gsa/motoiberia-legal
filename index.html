@@ -78,7 +78,7 @@
   <div class="wrap">
     <div class="brand">MotoIberia</div>
     <h1>Política de Privacidad</h1>
-    <p class="updated">Última actualización: 22 de julio de 2026</p>
+    <p class="updated">Última actualización: 24 de septiembre de 2026</p>
   </div>
 </header>
 
@@ -134,14 +134,41 @@
       <td>Ejecución del contrato</td>
     </tr>
     <tr>
-      <td>Fotos de rutas (pueden incluir geolocalización) y publicaciones</td>
-      <td>Funciones de comunidad. Son públicas y las publicas voluntariamente</td>
+      <td>Fotos de rutas (pueden incluir geolocalización), vídeos y
+          publicaciones</td>
+      <td>Funciones de comunidad. Son públicas y las publicas voluntariamente.
+          Ten en cuenta que, como en cualquier red social, <strong>una foto
+          publicada se puede abrir con su enlace directo sin necesidad de
+          tener cuenta</strong>; si la borras desde la app, deja de estar
+          accesible</td>
       <td>Consentimiento</td>
     </tr>
     <tr>
       <td>Uso de la función de rutas con IA (contadores)</td>
       <td>Control de las cuotas de tu plan</td>
       <td>Ejecución del contrato</td>
+    </tr>
+    <tr>
+      <td><strong>Ubicación aproximada</strong>, redondeada a unos 1,1&nbsp;km,
+          al generar una ruta con IA</td>
+      <td>Proponerte una ruta cerca de donde estás. Se envía a Anthropic desde
+          nuestro servidor, sin tu identidad y sin tu ubicación exacta</td>
+      <td>Ejecución del contrato</td>
+    </tr>
+    <tr>
+      <td>Datos técnicos de cada generación de ruta con IA: región propuesta,
+          si había ubicación disponible (sí o no, nunca la coordenada),
+          preferencia y duración pedidas, tiempo de respuesta y si funcionó</td>
+      <td>Saber lo que cuesta el servicio y detectar cuándo falla o va lento.
+          No incluye tu ubicación ni ningún texto que hayas escrito</td>
+      <td>Interés legítimo</td>
+    </tr>
+    <tr>
+      <td>Reportes de radares que envíes: posición del radar, tipo, límite y
+          sentido</td>
+      <td>Avisar al resto de la comunidad. Quién ha reportado cada radar queda
+          registrado pero <strong>no es visible para los demás usuarios</strong></td>
+      <td>Interés legítimo</td>
     </tr>
   </table>
   </div>
@@ -150,23 +177,29 @@
 
   <h2>3. Dónde se alojan tus datos</h2>
   <p>Los datos de tu cuenta se alojan en la infraestructura de
-  <strong>Supabase</strong> (base de datos PostgreSQL) con seguridad a nivel de
-  fila: tus datos privados solo son accesibles con tu propia sesión. Si algún
-  tratamiento implica transferencias internacionales fuera del Espacio Económico
-  Europeo, se realizan con las garantías del RGPD (cláusulas contractuales tipo
-  aprobadas por la Comisión Europea).</p>
+  <strong>Supabase</strong> (base de datos PostgreSQL), en servidores situados
+  <strong>en la Unión Europea (Irlanda)</strong>, con seguridad a nivel de fila:
+  tus datos privados solo son accesibles con tu propia sesión.</p>
+
+  <p>Algunos proveedores técnicos de los que se enumeran abajo pueden tratar
+  datos fuera del Espacio Económico Europeo. Cuando ocurre, se realiza con las
+  garantías previstas en el RGPD (cláusulas contractuales tipo aprobadas por la
+  Comisión Europea o marcos de adecuación vigentes).</p>
 
   <h2>4. Con quién se comparten</h2>
   <p><strong>No vendemos tus datos ni usamos publicidad de terceros.</strong>
   Empleamos únicamente proveedores técnicos necesarios para el servicio:</p>
   <ul>
     <li><strong>Supabase</strong> — alojamiento de base de datos, autenticación y archivos.</li>
-    <li><strong>Mapbox</strong> — cálculo de rutas: recibe coordenadas, no tu identidad.</li>
+    <li><strong>Mapbox</strong> — cálculo y recálculo de rutas. Recibe la
+      secuencia de coordenadas de cada trayecto que calculas, junto con tu
+      dirección IP, pero no tu nombre ni tu cuenta. Conviene que lo sepas con
+      claridad: aunque no viaje tu identidad, un recorrido completo es un dato
+      que puede decir mucho de ti.</li>
     <li><strong>Anthropic</strong> — generación de rutas con IA: recibe tu petición de
         ruta únicamente desde nuestro servidor, nunca directamente desde tu dispositivo.</li>
     <li><strong>OpenFreeMap / OpenStreetMap</strong> — visualización de mapas.</li>
-    <li><strong>Geoapify</strong> — búsqueda de lugares.</li>
-    <li><strong>Open-Meteo</strong> — información meteorológica.</li>
+    <li><strong>Geoapify</strong> — búsqueda de lugares y direcciones.</li>
   </ul>
 
   <h2>5. Cuánto tiempo conservamos tus datos</h2>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0D0D0D">
+<title>Cuenta confirmada · MotoIberia</title>
+<meta name="description" content="Confirmación de tu cuenta de MotoIberia.">
+<!--
+  Página a la que lleva el correo de confirmación de cuenta (Supabase,
+  `emailRedirectTo` en la app). La mantiene Claude Code: ver el encargo de
+  la web, «/confirmada.html».
+
+  «MotoIberia» solo en la cabecera, en mayúsculas: con la letra del sistema
+  la «I» y la «l» son casi iguales y se leía «Motolberia» (Luis, 01/10).
+
+  Sin nada de terceros: ni fuentes, ni scripts, ni analítica. Lo que añade
+  Supabase a la dirección (código o sesión, o el error) se lee aquí, en el
+  navegador, y se BORRA de la barra de direcciones: no debe quedarse en el
+  historial ni viajar a ningún sitio.
+-->
+<style>
+  :root {
+    --fondo: #0D0D0D; --tarjeta: #161616; --borde: #2A2A2A;
+    --naranja: #FF6B2B; --verde: #4CAF50; --texto: #F0F0F0; --suave: #9A9A9A;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--fondo); color: var(--texto); }
+  body {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .tarjeta {
+    width: 100%; max-width: 440px; background: var(--tarjeta);
+    border: 0.5px solid var(--borde); border-radius: 16px;
+    padding: 36px 28px 28px; text-align: center;
+  }
+  .marca {
+    font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+    font-size: 13px; color: var(--naranja); margin: 0 0 28px;
+  }
+  .icono {
+    width: 72px; height: 72px; margin: 0 auto 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--verde); color: var(--verde); font-size: 36px;
+  }
+  .error .icono { border-color: var(--naranja); color: var(--naranja); }
+  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 12px; font-weight: 700; }
+  p { color: var(--suave); margin: 0 0 14px; font-size: 15px; }
+  .boton {
+    display: block; width: 100%; margin: 24px 0 8px; padding: 15px 18px;
+    background: var(--naranja); color: #fff; text-decoration: none;
+    border-radius: 12px; font-weight: 700; font-size: 16px;
+  }
+  .boton:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .nota { font-size: 13px; }
+  footer { margin-top: 28px; font-size: 13px; color: var(--suave); text-align: center; }
+  footer a { color: var(--suave); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+  <main class="tarjeta" id="tarjeta" aria-live="polite">
+    <p class="marca">MotoIberia</p>
+
+    <section id="exito">
+      <div class="icono" aria-hidden="true">✓</div>
+      <h1>Cuenta confirmada</h1>
+      <p>Ya puedes entrar en la app con tu correo y tu contraseña.</p>
+      <a class="boton" id="abrir" href="motoiberia://app/login" hidden>Abrir la app</a>
+      <p class="nota" id="nota-movil" hidden>Si no se abre sola, ábrela desde tu iPhone y entra.</p>
+      <p class="nota" id="nota-ordenador" hidden>Abre la app en tu iPhone y entra con tu correo.</p>
+    </section>
+
+    <section id="fallo" class="error" hidden>
+      <div class="icono" aria-hidden="true">!</div>
+      <h1>Este enlace ya no vale</h1>
+      <p>Ha caducado o ya se usó. Si ya confirmaste tu cuenta, entra en la app
+        con tu correo y tu contraseña. Si no, vuelve a registrarte desde la app
+        y te llegará un correo nuevo.</p>
+      <a class="boton" id="abrir-fallo" href="motoiberia://app/login" hidden>Abrir la app</a>
+    </section>
+  </main>
+
+  <footer>
+    <a href="privacidad.html">Privacidad</a> ·
+    <a href="terminos.html">Términos</a> ·
+    <a href="mailto:AsesoramientoAsistia@outlook.es">Contacto</a>
+  </footer>
+
+<script>
+  (function () {
+    // Lo que añade Supabase al volver: en la consulta (?code=… o ?error=…)
+    // o en el fragmento (#access_token=… o #error=…), según el flujo.
+    var consulta = new URLSearchParams(window.location.search);
+    var fragmento = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    var error = consulta.get('error') || fragmento.get('error') ||
+                consulta.get('error_code') || fragmento.get('error_code');
+
+    // Fuera de la barra de direcciones y del historial, sin enviarlo a nadie.
+    if (window.location.search || window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    var esIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (error) {
+      document.getElementById('exito').hidden = true;
+      document.getElementById('fallo').hidden = false;
+      document.title = 'Enlace caducado · MotoIberia';
+      if (esIOS) document.getElementById('abrir-fallo').hidden = false;
+      return;
+    }
+    if (esIOS) {
+      document.getElementById('abrir').hidden = false;
+      document.getElementById('nota-movil').hidden = false;
+    } else {
+      document.getElementById('nota-ordenador').hidden = false;
+    }
+  })();
+</script>
+</body>
+</html>

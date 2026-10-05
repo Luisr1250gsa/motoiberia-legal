@@ -2,88 +2,60 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de Privacidad · MotoIberia</title>
 <meta name="description" content="Política de privacidad de la aplicación MotoIberia — rutas en moto por la Península Ibérica.">
-<style>
-  :root {
-    --bg: #ffffff;
-    --surface: #f7f6f4;
-    --text: #1c1c1c;
-    --muted: #5a5a5a;
-    --accent: #d4531b;
-    --border: #e2ded9;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --text: #f0f0f0;
-      --muted: #a8a8a8;
-      --accent: #ff6b2b;
-      --border: #2a2a2a;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 17px/1.65 Georgia, "Times New Roman", serif;
-  }
-  header {
-    border-bottom: 3px solid var(--accent);
-    background: var(--surface);
-    padding: 2.5rem 1.25rem 2rem;
-  }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
-  header .wrap { padding: 0; max-width: 760px; margin: 0 auto; }
-  h1 { font-size: 1.9rem; margin: 0 0 .4rem; }
-  .brand {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-size: .95rem;
-    margin-bottom: .8rem;
-  }
-  .updated { color: var(--muted); font-size: .95rem; font-style: italic; }
-  main { padding: 2rem 0 4rem; }
-  h2 {
-    font-size: 1.3rem;
-    margin: 2.4rem 0 .8rem;
-    padding-bottom: .3rem;
-    border-bottom: 1px solid var(--border);
-  }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--border); padding: .55rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--surface); font-family: "Helvetica Neue", Arial, sans-serif; font-size: .85rem; }
-  .tabla-scroll { overflow-x: auto; }
-  a { color: var(--accent); }
-  footer {
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: .9rem;
-    padding: 1.5rem 1.25rem 3rem;
-    text-align: center;
-  }
-  ul { padding-left: 1.3rem; }
-  li { margin-bottom: .35rem; }
-</style>
-</head>
-<body>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://motoiberia.asist-ia.org/privacidad.html">
+<meta name="theme-color" content="#0D0D0D">
 
-<header>
-  <div class="wrap">
-    <div class="brand">MotoIberia</div>
-    <h1>Política de Privacidad</h1>
-    <p class="updated">Última actualización: 24 de septiembre de 2026</p>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MotoIberia">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Política de Privacidad · MotoIberia">
+<meta property="og:description" content="Política de privacidad de la aplicación MotoIberia — rutas en moto por la Península Ibérica.">
+<meta property="og:url" content="https://motoiberia.asist-ia.org/privacidad.html">
+<meta property="og:image" content="https://motoiberia.asist-ia.org/img/og-motoiberia.jpg">
+<meta property="og:image:alt" content="MotoIberia: rutas en moto por la Península Ibérica">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+<link rel="preload" href="fonts/rajdhani-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css">
+<script src="menu.js"></script>
+</head>
+<body class="mi">
+
+<a class="mi-skip" href="#contenido">Saltar al contenido</a>
+
+<header class="mi-top">
+  <div class="mi-top__in">
+    <a class="mi-brand" href="./" aria-label="MotoIberia, inicio"><img src="img/logo-512.png" width="36" height="36" alt=""><span aria-hidden="true">Moto<b>Iberia</b></span></a>
+    <button class="mi-menu-btn" type="button" aria-expanded="false" aria-controls="mi-nav">Menú</button>
+    <nav class="mi-nav" id="mi-nav" aria-label="Principal">
+      <ul>
+        <li><a href="./">Inicio</a></li>
+        <li><a href="./#carplay">CarPlay</a></li>
+        <li><a href="./#funciones">Funciones</a></li>
+        <li><a href="./#sin-cuenta">Sin cuenta</a></li>
+        <li><a href="soporte.html">Soporte</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
-<main class="wrap">
+<main id="contenido">
+
+  <div class="mi-hero">
+    <h1>Política de Privacidad</h1>
+    <p class="mi-hero__meta">Última actualización: 24 de septiembre de 2026</p>
+    <div class="mi-route" aria-hidden="true"></div>
+  </div>
+
+  <div class="mi-doc">
 
   <p>Esta política describe qué datos personales trata la aplicación móvil
   <strong>MotoIberia</strong>, con qué finalidad y qué derechos te asisten,
@@ -99,9 +71,9 @@
   </p>
 
   <h2>2. Qué datos tratamos y para qué</h2>
-  <div class="tabla-scroll">
+  <div class="mi-tabla-scroll" tabindex="0" role="region" aria-label="Tabla de datos tratados, finalidad y base jurídica">
   <table>
-    <tr><th>Datos</th><th>Finalidad</th><th>Base jurídica</th></tr>
+    <tr><th scope="col">Datos</th><th scope="col">Finalidad</th><th scope="col">Base jurídica</th></tr>
     <tr>
       <td>Email y contraseña (almacenada cifrada)</td>
       <td>Crear y gestionar tu cuenta (autenticación mediante Supabase)</td>
@@ -229,15 +201,28 @@
   la app antes de que el cambio entre en vigor. La versión vigente estará
   siempre publicada en esta página.</p>
 
-  <p style="margin-top:2.5rem">
+  <p class="mi-doc__fin">
     Puedes consultar también nuestros
     <a href="./terminos.html">Términos de Uso</a>.
   </p>
 
+</div>
+
 </main>
 
-<footer>
-  MotoIberia · Luis Villegas Cebrián · Xirivella, Valencia, España
+<footer class="mi-foot">
+  <div class="mi-foot__in">
+    <nav aria-label="Pie de página">
+      <ul>
+        <li><a href="privacidad.html" aria-current="page">Privacidad</a></li>
+        <li><a href="terminos.html">Términos</a></li>
+        <li><a href="soporte.html">Soporte</a></li>
+        <li><a href="mailto:AsesoramientoAsistia@outlook.es">AsesoramientoAsistia@outlook.es</a></li>
+      </ul>
+    </nav>
+    <p>© Moto<b class="mi-i">Iberia</b></p>
+    <p>MotoIberia · Luis Villegas Cebrián · Xirivella, Valencia, España</p>
+  </div>
 </footer>
 
 </body>

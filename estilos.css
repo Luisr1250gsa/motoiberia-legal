@@ -1,0 +1,1073 @@
+/* ==========================================================================
+   MotoIberia · estilos comunes
+   Dirección: «asfalto y brasa». Fondo negro, naranja fuego como único
+   protagonista y una línea de ruta con punto de paso como seña de identidad.
+   Todo lleva el prefijo mi- para no pisar otras páginas (p. ej. confirmada.html).
+   ========================================================================== */
+
+/* ---------- Tipografías autoalojadas (sin servidores de terceros) ---------- */
+@font-face { font-family: "Rajdhani"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("fonts/rajdhani-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Rajdhani"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("fonts/rajdhani-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Rajdhani"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("fonts/rajdhani-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fonts/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("fonts/inter-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("fonts/inter-latin-600-normal.woff2") format("woff2"); }
+
+/* ---------- Variables de marca ---------- */
+:root {
+  --mi-bg: #0D0D0D;
+  --mi-card: #161616;
+  --mi-line: #2A2A2A;
+  --mi-text: #F0F0F0;
+  --mi-muted: #A8A8A8;
+  --mi-fire: #FF6B2B;
+  --mi-fire-soft: #FF8A57;       /* naranja algo más claro para el hover */
+  --mi-blue: #7AB8F5;            /* azul CarPlay: solo para lo que es de CarPlay */
+  --mi-glow: rgba(255, 107, 43, .42);  /* brillo suave del neón */
+  --mi-r-s: 8px;
+  --mi-r-m: 12px;
+  --mi-r-l: 16px;
+  --mi-font-head: "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --mi-font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mi-ancho: 72rem;
+}
+
+html:has(body.mi) {
+  color-scheme: dark;
+  scroll-padding-top: 5rem;
+}
+
+/* ---------- Base ---------- */
+.mi, .mi *, .mi *::before, .mi *::after { box-sizing: border-box; }
+
+.mi {
+  margin: 0;
+  background: var(--mi-bg);
+  position: relative;
+  isolation: isolate;  /* las dos capas de fondo quedan por encima del negro */
+  min-height: 100vh;
+  color: var(--mi-text);
+  font: 400 1.0625rem/1.7 var(--mi-font-body);
+  -webkit-text-size-adjust: 100%;
+}
+
+.mi a { color: var(--mi-fire); text-underline-offset: .2em; }
+.mi a:hover { color: var(--mi-fire-soft); }
+
+.mi :focus-visible {
+  outline: 2px solid var(--mi-fire);
+  outline-offset: 3px;
+  border-radius: var(--mi-r-s);
+}
+
+.mi-skip {
+  position: absolute;
+  left: 1rem;
+  top: -5rem;
+  z-index: 50;
+  padding: .75rem 1rem;
+  background: var(--mi-fire);
+  color: var(--mi-bg);
+  font-weight: 600;
+  border-radius: var(--mi-r-s);
+  text-decoration: none;
+}
+.mi .mi-skip { color: var(--mi-bg); }
+.mi-skip:focus { top: 1rem; }
+
+/* ---------- Asfalto de fondo en toda la web ----------
+   Dos capas detrás del contenido:
+   · ::before, la foto FIJA a la ventana (en iPhone no hay
+     background-attachment: fixed; una capa fija hace lo mismo).
+   · ::after, un velo que va CON la página: suave en la cabecera de la
+     portada y más oscuro después, para que el texto largo se lea. */
+.mi::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url("img/carretera.webp") 60% 40% / cover no-repeat;
+  pointer-events: none;
+}
+.mi::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(13, 13, 13, .3) 0, rgba(13, 13, 13, .3) 30rem,
+    rgba(13, 13, 13, .8) 58rem, rgba(13, 13, 13, .8) 100%);
+  pointer-events: none;
+}
+/* Privacidad, Términos y Soporte: páginas de lectura, velo oscuro entero */
+.mi:not(:has(.mi-inicio))::after { background: rgba(13, 13, 13, .86); }
+@media (max-width: 40rem) {
+  .mi::before { background-image: url("img/carretera-movil.webp"); background-position: 65% 30%; }
+  .mi::after {
+    background: linear-gradient(180deg,
+      rgba(13, 13, 13, .5) 0, rgba(13, 13, 13, .5) 28rem,
+      rgba(13, 13, 13, .82) 52rem, rgba(13, 13, 13, .82) 100%);
+  }
+}
+
+/* ---------- Cabecera y menú ---------- */
+.mi-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(13, 13, 13, .82);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+          backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: .5px solid var(--mi-line);
+}
+.mi-top__in {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: .7rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+}
+
+.mi .mi-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font: 700 1.55rem/1 var(--mi-font-head);
+  letter-spacing: .01em;
+  color: var(--mi-text);
+  text-decoration: none;
+}
+.mi-brand img { width: 2.25rem; height: 2.25rem; border-radius: .55rem; }
+
+/* La marca en dos colores, como en el rótulo: «Moto» en blanco e «Iberia» en
+   naranja. Así la «I» no se confunde con una «l» («Motolberia»). */
+.mi-brand b, .mi-i, .mi-marca__rotulo b { font-weight: inherit; color: var(--mi-fire); }
+
+.mi-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mi .mi-nav a {
+  display: block;
+  padding: .8rem .85rem;
+  border-radius: var(--mi-r-s);
+  font: 600 1.1rem/1 var(--mi-font-head);
+  letter-spacing: .02em;
+  color: var(--mi-text);
+  text-decoration: none;
+}
+.mi .mi-nav a:hover { color: var(--mi-fire); }
+.mi .mi-nav a[aria-current="page"] {
+  color: var(--mi-fire);
+  box-shadow: inset 0 -2px 0 var(--mi-fire);
+  border-radius: 0;
+}
+
+.mi-menu-btn {
+  display: none;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  background: var(--mi-card);
+  color: var(--mi-text);
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-s);
+  font: 600 1.05rem/1 var(--mi-font-head);
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.mi-menu-btn[aria-expanded="true"] {
+  border-color: var(--mi-fire);
+  box-shadow: 0 0 .9rem var(--mi-glow);
+}
+
+@media (max-width: 47.99rem) {
+  .mi-nav { width: 100%; }
+  .mi-js .mi-menu-btn { display: inline-flex; }
+  .mi-js .mi-nav { display: none; }
+  .mi-js .mi-nav.is-open { display: block; }
+  .mi-js .mi-nav ul { flex-direction: column; padding-bottom: .5rem; }
+}
+
+/* ---------- Título de página con la línea de ruta ---------- */
+.mi-hero {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vw, 5rem) 1.25rem 0;
+}
+.mi-hero h1 {
+  margin: 0 0 .75rem;
+  font: 700 clamp(2.4rem, 7vw, 4rem)/1.04 var(--mi-font-head);
+  letter-spacing: .005em;
+}
+.mi-hero__meta {
+  margin: 0;
+  color: var(--mi-muted);
+  font-size: .95rem;
+}
+
+.mi-route {                  /* seña de identidad: tramo naranja con punto de paso */
+  position: relative;
+  height: 2px;
+  margin: 1.75rem 0 0;
+  background: var(--mi-line);
+}
+.mi-route::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6rem;
+  background: var(--mi-fire);
+  box-shadow: 0 0 .9rem var(--mi-glow);
+}
+.mi-route::after {
+  content: "";
+  position: absolute;
+  left: 6rem;
+  top: 50%;
+  width: .7rem;
+  height: .7rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--mi-bg);
+  border: 2px solid var(--mi-fire);
+  box-shadow: 0 0 .7rem var(--mi-glow);
+}
+
+/* ---------- Texto largo (páginas legales) ---------- */
+.mi-doc {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.mi-doc > * { max-width: 46rem; }
+.mi-doc > .mi-tabla-scroll { max-width: 100%; }
+
+.mi-doc p, .mi-doc li { color: var(--mi-text); }
+.mi-doc strong { font-weight: 600; color: #fff; }
+.mi-doc ul { padding-left: 1.3rem; }
+.mi-doc li { margin-bottom: .35rem; }
+
+.mi-doc h2 {
+  position: relative;
+  margin: 3rem 0 1rem;
+  padding-left: 1rem;
+  font: 600 1.65rem/1.2 var(--mi-font-head);
+  letter-spacing: .01em;
+}
+.mi-doc h2::before {          /* marca el arranque de cada apartado */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .12em;
+  bottom: .12em;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--mi-fire);
+  box-shadow: 0 0 .6rem rgba(255, 107, 43, .3);
+}
+
+.mi-doc__fin { margin-top: 2.5rem; }
+
+.mi-tabla-scroll {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  background: var(--mi-card);
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-m);
+}
+.mi-tabla-scroll table {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  font-size: .95rem;
+  line-height: 1.55;
+}
+.mi-tabla-scroll th,
+.mi-tabla-scroll td {
+  padding: .8rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: .5px solid var(--mi-line);
+}
+.mi-tabla-scroll th {
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--mi-fire);
+  border-bottom: 1px solid var(--mi-fire);
+}
+.mi-tabla-scroll tr:last-child td { border-bottom: 0; }
+
+/* ---------- Pie común ---------- */
+.mi-foot {
+  background: var(--mi-card);
+  border-top: .5px solid var(--mi-line);
+}
+.mi-foot__in {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+.mi-foot ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mi .mi-foot a { color: var(--mi-text); text-decoration: none; padding: .35rem 0; display: inline-block; }
+.mi .mi-foot a:hover { color: var(--mi-fire); text-decoration: underline; }
+.mi .mi-foot a[aria-current="page"] { color: var(--mi-fire); }
+.mi-foot p { margin: 0; color: var(--mi-muted); font-size: .9rem; line-height: 1.6; }
+
+/* ==========================================================================
+   PORTADA
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(body.mi) { scroll-behavior: smooth; }
+}
+
+.mi-portada { padding-bottom: clamp(3.5rem, 9vw, 6rem); overflow-x: clip; }  /* la lluvia de trazos no ensancha la página */
+
+.mi-sec {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vw, 5.5rem) 1.25rem 0;
+}
+
+/* ---------- Títulos y texto ---------- */
+.mi-h2 {
+  margin: 0 0 1rem;
+  font: 700 clamp(2rem, 5.5vw, 3rem)/1.08 var(--mi-font-head);
+  letter-spacing: .005em;
+}
+.mi-p {
+  max-width: 36rem;
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+/* ---------- Botón de estado («Próximamente»): no es un enlace ---------- */
+.mi-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: 0 1.6rem;
+  background: var(--mi-fire);
+  color: var(--mi-bg);
+  border-radius: var(--mi-r-m);
+  font: 700 1.3rem/1 var(--mi-font-head);
+  letter-spacing: .02em;
+  box-shadow: 0 0 0 1px var(--mi-fire), 0 0 1.6rem var(--mi-glow);
+  cursor: default;
+}
+.mi a.mi-btn { color: var(--mi-bg); text-decoration: none; cursor: pointer; }
+.mi a.mi-btn:hover { background: var(--mi-fire-soft); color: var(--mi-bg); }
+.mi-nota {
+  margin: 1rem 0 0;
+  color: var(--mi-muted);
+  font-size: .95rem;
+}
+
+/* ---------- Cabecera de la portada ---------- */
+.mi-inicio {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  padding-top: clamp(2.5rem, 7vw, 5rem);
+}
+.mi-inicio .mi-route { grid-column: 1 / -1; margin-top: .5rem; }
+
+.mi-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 0 0 1.25rem;
+  color: var(--mi-muted);
+  font-size: 1rem;
+}
+.mi-eyebrow::before {
+  content: "";
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: var(--mi-fire);
+  box-shadow: 0 0 .7rem var(--mi-glow);
+}
+
+.mi-h1 {
+  margin: 0 0 1.25rem;
+  font: 700 clamp(2.9rem, 9vw, 5.4rem)/1 var(--mi-font-head);
+  letter-spacing: .005em;
+}
+.mi-h1 span { display: block; }
+
+.mi-lead {
+  max-width: 32rem;
+  margin: 0 0 2rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+  line-height: 1.55;
+}
+
+/* ---------- Marcos de las capturas (iPhone naranja, CarPlay azul) ---------- */
+.mi-iphone,
+.mi-pantalla { margin: 0; background: #000; }
+
+.mi-iphone {
+  width: min(14rem, 62vw);
+  padding: .5rem;
+  border: 1px solid var(--mi-fire);
+  border-radius: 2.2rem;
+  box-shadow: 0 0 2.4rem rgba(255, 107, 43, .28);
+}
+.mi-iphone__in {
+  aspect-ratio: 600 / 1304;
+  border-radius: 1.7rem;
+}
+
+.mi-pantalla {
+  padding: .35rem;
+  border: 1px solid var(--mi-blue);
+  border-radius: 1rem;
+  box-shadow: 0 0 2rem rgba(122, 184, 245, .26);
+}
+.mi-pantalla__in {
+  aspect-ratio: 16 / 9;
+  border-radius: .7rem;
+}
+
+.mi-iphone__in,
+.mi-pantalla__in { overflow: hidden; background: var(--mi-card); }
+.mi-iphone img,
+.mi-pantalla img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* El vídeo de la app mide 600x1066 (9:16), más ancho que una captura de
+   iPhone (600x1304). Con el marco de captura, «cover» le recortaba ~18 %
+   por los lados: este marco tiene la forma exacta del vídeo y se ve entero. */
+.mi-iphone__in--video { aspect-ratio: 600 / 1066; }
+/* El vídeo de CarPlay rodando tiene la proporción real de la pantalla del Carpuride */
+.mi-pantalla__in--video { aspect-ratio: 1280 / 696; }
+.mi-video { display: block; width: 100%; height: 100%; object-fit: cover; background: #0D0D0D; }
+
+/* Espacio reservado hasta tener la captura */
+.mi-hueco {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  background: repeating-linear-gradient(135deg, #181818 0 .75rem, #141414 .75rem 1.5rem);
+  color: var(--mi-muted);
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+/* Composición: iPhone a la derecha y pantalla de CarPlay solapada */
+.mi-escena { display: grid; }
+.mi-escena .mi-iphone { justify-self: end; }
+.mi-escena .mi-pantalla {
+  position: relative;
+  z-index: 2;
+  justify-self: start;
+  width: min(19rem, 86%);
+  margin-top: -4.5rem;
+}
+
+@media (min-width: 60rem) {
+  .mi-inicio {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    gap: 3rem 2rem;
+  }
+  /* 38rem: el recuadro de CarPlay roza el pie del vídeo sin taparlo */
+  .mi-escena { display: block; position: relative; min-height: 38rem; }
+  .mi-escena .mi-iphone { position: absolute; right: 3%; top: 0; width: 15rem; }
+  .mi-escena .mi-pantalla { position: absolute; left: 0; bottom: 1rem; width: min(23rem, 72%); margin: 0; }
+}
+
+/* ---------- Bloque CarPlay (el diferencial) ---------- */
+.mi-carplay {
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: var(--mi-card);
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-l);
+}
+.mi-carplay::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: clamp(1.5rem, 5vw, 3rem);
+  width: 6rem;
+  height: 2px;
+  background: var(--mi-blue);
+  box-shadow: 0 0 .9rem rgba(122, 184, 245, .5);
+}
+@media (min-width: 60rem) {
+  .mi-carplay { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; gap: 3rem; }
+}
+
+.mi-chip {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: .3rem .8rem;
+  border: .5px solid var(--mi-blue);
+  border-radius: 999px;
+  color: var(--mi-blue);
+  font: 600 1rem/1.2 var(--mi-font-head);
+  letter-spacing: .03em;
+}
+.mi .mi-enlace { color: var(--mi-blue); font-weight: 600; }
+.mi .mi-enlace:hover { color: #A9D0F8; }
+
+/* ---------- Funciones: tarjetas desplegables ---------- */
+.mi-funciones {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 40rem) { .mi-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 72rem) { .mi-funciones { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.mi-card {
+  position: relative;
+  background: var(--mi-card);
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-m);
+}
+.mi-card::after {              /* neón suave: aparece con opacidad, sin animar el brillo */
+  content: "";
+  position: absolute;
+  inset: -.5px;
+  border: .5px solid var(--mi-fire);
+  border-radius: inherit;
+  box-shadow: 0 0 1.4rem var(--mi-glow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.mi-card:hover::after,
+.mi-card[open]::after { opacity: 1; }
+
+.mi-card summary {
+  position: relative;
+  display: block;
+  min-height: 2.75rem;
+  padding: 1.25rem 3rem 1.15rem 1.25rem;
+  list-style: none;
+  cursor: pointer;
+}
+.mi-card summary::-webkit-details-marker { display: none; }
+@media (min-width: 72rem) { .mi-funciones .mi-card summary { min-height: 10.4rem; } }
+.mi-card summary::after {      /* flecha que gira al abrir */
+  content: "";
+  position: absolute;
+  top: 1.45rem;
+  right: 1.35rem;
+  width: .6rem;
+  height: .6rem;
+  border-right: 2px solid var(--mi-fire);
+  border-bottom: 2px solid var(--mi-fire);
+  transform: rotate(45deg);
+  transition: transform .2s;
+}
+.mi-card[open] summary::after { transform: rotate(-135deg); top: 1.7rem; }
+
+.mi-ico {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-bottom: .9rem;
+  fill: none;
+  stroke: var(--mi-fire);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.mi-card h3 {
+  margin: 0 0 .35rem;
+  font: 600 1.4rem/1.15 var(--mi-font-head);
+  letter-spacing: .01em;
+}
+.mi-card__resumen { display: block; font-size: .95rem; line-height: 1.55; color: var(--mi-muted); }
+.mi-card__mas {
+  margin: 0 1.25rem;
+  padding: 1rem 0 1.25rem;
+  border-top: .5px solid var(--mi-line);
+}
+.mi-card__mas p { margin: 0; font-size: .95rem; line-height: 1.6; }
+
+/* ---------- Sin cuenta ---------- */
+.mi-sincuenta {
+  display: grid;
+  gap: 1.5rem 3rem;
+  padding-top: clamp(2rem, 6vw, 3rem);
+  border-top: .5px solid var(--mi-line);
+}
+.mi-sincuenta .mi-h2 { margin: 0; }
+.mi-sincuenta .mi-p { margin-bottom: 1.75rem; }
+@media (min-width: 60rem) {
+  .mi-sincuenta { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; }
+}
+
+/* ---------- Una sola entrada al cargar la portada ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .mi-inicio__texto > * { animation: mi-sube .6s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-inicio__texto > :nth-child(2) { animation-delay: .08s; }
+  .mi-inicio__texto > :nth-child(3) { animation-delay: .16s; }
+  .mi-inicio__texto > :nth-child(4) { animation-delay: .24s; }
+  .mi-inicio__texto > :nth-child(5) { animation-delay: .3s; }
+  .mi-escena { animation: mi-sube .8s .2s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-route--anim::before { transform-origin: left; animation: mi-trazo .8s .4s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-route--anim::after { animation: mi-nodo .3s 1.1s both; }
+}
+@keyframes mi-sube { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes mi-trazo { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes mi-nodo { from { opacity: 0; } to { opacity: 1; } }
+
+/* ==========================================================================
+   SOPORTE
+   ========================================================================== */
+.mi-soporte {
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+.mi-faqlist {
+  display: grid;
+  gap: .75rem;
+  max-width: 46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mi-faq__q {
+  margin: 0;
+  font: 600 1.35rem/1.25 var(--mi-font-head);
+  letter-spacing: .01em;
+}
+
+/* ==========================================================================
+   LENGUAJE DE CARRETERA · 01/10/2026
+   Puntos kilométricos, la línea discontinua del centro de la calzada y
+   el rótulo de la marca. Solo se animan transform y opacity, y nada se
+   mueve con «reducir movimiento».
+   ========================================================================== */
+
+/* ---------- Lluvia de trazos de la pantalla de bienvenida de la app ---------- */
+.mi-inicio { position: relative; isolation: isolate; }
+.mi-inicio::before {
+  content: "";
+  position: absolute;
+  inset: 0 -50vw;
+  z-index: -1;
+  background: repeating-linear-gradient(97deg, transparent 0 9rem, rgba(255, 107, 43, .07) 9rem calc(9rem + 1px));
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 70% 40%, #000, transparent 75%);
+          mask-image: radial-gradient(ellipse 60% 70% at 70% 40%, #000, transparent 75%);
+  pointer-events: none;
+}
+
+/* ---------- Cabecera de la portada sobre el asfalto ----------
+   La foto la pone toda la web (.mi::before). Aquí solo se oscurece la
+   izquierda, donde va el titular. */
+.mi-inicio::after {
+  content: "";
+  position: absolute;
+  inset: 0 -50vw;
+  z-index: -2;
+  background: linear-gradient(90deg, rgba(13, 13, 13, .7) 0%, rgba(13, 13, 13, .35) 50%, transparent 100%);
+  /* Se disuelve hacia abajo: sin esto quedaba una línea al acabar la cabecera */
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  pointer-events: none;
+}
+@media (max-width: 40rem) { .mi-inicio::after { background: none; } }
+
+/* ---------- Punto kilométrico: el hito blanco de la carretera ---------- */
+.mi-pk {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  margin: 0 0 1rem;
+  color: var(--mi-muted);
+  font: 600 1rem/1 var(--mi-font-head);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.mi-pk span {
+  display: inline-block;
+  padding: .5rem .55rem .35rem;
+  background: #F0F0F0;
+  color: #0D0D0D;
+  border-top: .3rem solid var(--mi-fire);
+  border-radius: .2rem .2rem .1rem .1rem;
+  font-size: .85rem;
+  letter-spacing: .06em;
+}
+#carplay .mi-pk span { border-top-color: var(--mi-blue); }
+
+/* ---------- Línea discontinua del centro de la calzada ---------- */
+.mi-carril {
+  max-width: var(--mi-ancho);
+  margin: clamp(3rem, 8vw, 5rem) auto 0;
+  padding: 0 1.25rem;
+  overflow: hidden;
+}
+.mi-carril span {
+  display: block;
+  width: calc(100% + 4.5rem);
+  height: 3px;
+  margin-left: -4.5rem;
+  background: repeating-linear-gradient(90deg, rgba(240, 240, 240, .22) 0 2.5rem, transparent 2.5rem 4.5rem);
+  transform: translateX(var(--mi-avance, 0px));
+  will-change: transform;
+}
+.mi-carril + .mi-sec { padding-top: clamp(2rem, 6vw, 3.5rem); }
+
+/* ---------- Banda de marca ---------- */
+.mi-marca {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: #111;
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-l);
+  overflow: hidden;
+}
+@media (min-width: 48rem) { .mi-marca { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 3rem; } }
+.mi-marca__rotulo {
+  margin: 0;
+  font: 700 clamp(3.4rem, 11vw, 6.5rem)/.95 var(--mi-font-head);
+  letter-spacing: .01em;
+}
+.mi-marca__lema {
+  margin: 1.5rem 0 0;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--mi-fire);
+  font: 500 clamp(1.15rem, 3vw, 1.5rem)/1.2 var(--mi-font-head);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.mi-marca__lema i, .mi-marca__pie i { font-style: normal; color: var(--mi-fire); padding: 0 .3em; }
+.mi-marca__pie {
+  margin: 1.1rem 0 0;
+  color: var(--mi-muted);
+  font: 600 .9rem/1 var(--mi-font-head);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.mi-marca__mapa {
+  position: relative;
+  margin: 0;
+  max-width: 24rem;
+  justify-self: center;
+  border-radius: var(--mi-r-l);
+  overflow: hidden;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, .55);
+}
+.mi-marca__mapa img { display: block; width: 100%; height: auto; }
+.mi-wp {                       /* punto de paso que se enciende */
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 7%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid var(--mi-blue);
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* ---------- La app por dentro: carrusel con el dedo ---------- */
+.mi-galeria__cab { display: flex; align-items: end; justify-content: space-between; gap: 1rem; }
+.mi-galeria__flechas { display: none; gap: .5rem; padding-bottom: 1rem; }
+.mi-js .mi-galeria__flechas { display: flex; }
+@media (max-width: 47.99rem) { .mi-js .mi-galeria__flechas { display: none; } }
+.mi-flecha {
+  width: 3rem;
+  height: 3rem;
+  background: var(--mi-card);
+  border: .5px solid var(--mi-line);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+.mi-flecha::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: .65rem;
+  height: .65rem;
+  border-left: 2px solid var(--mi-fire);
+  border-bottom: 2px solid var(--mi-fire);
+  transform: translateX(.12rem) rotate(45deg);
+}
+.mi-flecha--sig::before { transform: translateX(-.12rem) rotate(-135deg); }
+.mi-flecha:hover { border-color: var(--mi-fire); box-shadow: 0 0 1rem var(--mi-glow); }
+
+.mi-galeria {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem -1.25rem 0;
+  padding: .5rem 1.25rem 1.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 1.25rem;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.mi-galeria::-webkit-scrollbar { display: none; }
+.mi-toma { flex: 0 0 auto; width: min(13.5rem, 62vw); scroll-snap-align: start; }
+.mi-toma--ancha { width: min(26rem, 84vw); }
+.mi-toma figure { margin: 0; }
+.mi-toma__marco {
+  aspect-ratio: 600 / 1304;
+  overflow: hidden;
+  background: #000;
+  border: .5px solid var(--mi-line);
+  border-radius: 1.6rem;
+  transition: transform .35s cubic-bezier(.2, .7, .2, 1), border-color .2s, box-shadow .2s;
+}
+.mi-toma--ancha .mi-toma__marco { aspect-ratio: auto; height: calc(min(13.5rem, 62vw) * 1304 / 600); border-radius: var(--mi-r-l); }
+.mi-toma__marco img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.mi-toma:hover .mi-toma__marco { transform: translateY(-6px); border-color: var(--mi-fire); box-shadow: 0 0 1.6rem var(--mi-glow); }
+.mi-toma figcaption { margin-top: .9rem; font-size: .95rem; line-height: 1.45; color: var(--mi-muted); }
+.mi-toma figcaption b { display: block; color: var(--mi-text); font: 600 1.2rem/1.2 var(--mi-font-head); letter-spacing: .01em; }
+
+/* ---------- Funciones: dos columnas también en el móvil ---------- */
+@media (max-width: 39.99rem) {
+  .mi-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+  .mi-card summary { padding: 1rem 2.1rem 1rem .9rem; }
+  .mi-card summary::after { top: 1.15rem; right: .9rem; }
+  .mi-card[open] summary::after { top: 1.4rem; }
+  .mi-card h3 { font-size: 1.2rem; }
+  .mi-card__resumen { font-size: .88rem; }
+  .mi-card__mas { margin: 0 .9rem; }
+  .mi-card[open] { grid-column: 1 / -1; }
+}
+.mi-funciones li { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+.mi-funciones li:hover { transform: translateY(-4px); }
+
+/* ---------- Movimiento al llegar a cada bloque (lo activa movimiento.js) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .mi-mov [data-revela] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  .mi-mov [data-revela].is-visto { opacity: 1; transform: none; }
+  .mi-funciones li[data-revela].is-visto:hover { transform: translateY(-4px); transition-delay: 0s; }
+
+  .mi-mov .mi-marca .mi-marca__mapa img { transform: scale(1.08); transition: transform 1.4s cubic-bezier(.2, .7, .2, 1); }
+  .mi-mov .mi-marca.is-visto .mi-marca__mapa img { transform: none; }
+  .mi-marca.is-visto .mi-wp { animation: mi-enciende .5s calc(.6s + var(--d)) both, mi-latido 2.4s calc(1.4s + var(--d)) infinite; }
+
+  [data-paralaje] { transform: translateY(var(--mi-par, 0px)); will-change: transform; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mi-wp { opacity: 1; }
+  .mi-funciones li:hover, .mi-toma:hover .mi-toma__marco { transform: none; }
+}
+@keyframes mi-enciende { from { opacity: 0; transform: translate(-50%, -50%) scale(.3); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes mi-latido {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  70% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); }
+}
+
+/* ==========================================================================
+   «Pregunta a Athenea» · preguntas rápidas fijas + charla con IA (asistente.js)
+   ========================================================================== */
+.mi-asis { position: fixed; right: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); z-index: 40; }
+.mi-asis__abrir {
+  display: inline-flex; align-items: center; gap: .55rem;
+  min-height: 3.25rem; padding: .4rem 1.1rem .4rem .5rem;
+  background: var(--mi-card); color: var(--mi-text);
+  border: 1px solid var(--mi-fire); border-radius: 999px;
+  font: 600 1.1rem/1 var(--mi-font-head); letter-spacing: .02em;
+  box-shadow: 0 .6rem 2rem rgba(0, 0, 0, .6), 0 0 1.4rem var(--mi-glow);
+  cursor: pointer;
+}
+.mi-asis__abrir img { border-radius: 50%; }
+.is-abierto .mi-asis__abrir { display: none; }
+@media (max-width: 30rem) { .mi-asis__abrir span { display: none; } .mi-asis__abrir { padding: .4rem; } .mi-asis__abrir img { width: 2.4rem; height: 2.4rem; } }
+
+.mi-asis__panel {
+  display: flex; flex-direction: column;
+  width: min(24rem, calc(100vw - 2rem));
+  height: min(36rem, calc(100dvh - 6rem));
+  background: #121212;
+  border: .5px solid var(--mi-line); border-radius: var(--mi-r-l);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 107, 43, .25);
+  overflow: hidden;
+}
+.mi-asis__panel[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .mi-asis__panel { animation: mi-sube .35s cubic-bezier(.2, .7, .2, 1) both; transform-origin: bottom right; }
+}
+.mi-asis__cab {
+  display: flex; align-items: center; gap: .7rem;
+  padding: .8rem .8rem .8rem 1rem;
+  border-bottom: .5px solid var(--mi-line); background: var(--mi-card);
+}
+.mi-asis__cab img { border-radius: .5rem; }
+.mi-asis__cab div { flex: 1; min-width: 0; }
+.mi-asis__nombre { margin: 0; font: 700 1.25rem/1 var(--mi-font-head); }
+.mi-asis__sub { margin: .2rem 0 0; font-size: .8rem; color: var(--mi-muted); }
+.mi-asis__voz, .mi-asis__cerrar {
+  min-width: 2.75rem; height: 2.75rem; padding: 0 .7rem;
+  background: transparent; color: var(--mi-muted);
+  border: .5px solid var(--mi-line); border-radius: var(--mi-r-s);
+  font: 600 .95rem/1 var(--mi-font-head); letter-spacing: .04em; cursor: pointer; position: relative;
+}
+.mi-asis__voz[aria-pressed="true"] { color: var(--mi-fire); border-color: var(--mi-fire); }
+.mi-asis__voz[aria-pressed="false"] { text-decoration: line-through; }
+.mi-asis__cerrar::before, .mi-asis__cerrar::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 1rem; height: 2px; background: var(--mi-text);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.mi-asis__cerrar::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.mi-asis__charla { position: relative; flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: .6rem; overscroll-behavior: contain; }
+.mi-asis__msg { max-width: 88%; padding: .65rem .85rem; border-radius: 1rem; font-size: .93rem; line-height: 1.5; }
+.mi-asis__msg--app { align-self: flex-start; background: var(--mi-card); border: .5px solid var(--mi-line); border-bottom-left-radius: .3rem; }
+.mi-asis__msg--tu { align-self: flex-end; background: var(--mi-fire); color: #0D0D0D; font-weight: 600; border-bottom-right-radius: .3rem; }
+.mi-asis__puntos { display: inline-flex; gap: .25rem; }
+.mi-asis__puntos i { width: .4rem; height: .4rem; border-radius: 50%; background: var(--mi-muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .mi-asis__msg { animation: mi-sube .3s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-asis__puntos i { animation: mi-punto 1s infinite; }
+  .mi-asis__puntos i:nth-child(2) { animation-delay: .15s; }
+  .mi-asis__puntos i:nth-child(3) { animation-delay: .3s; }
+}
+@keyframes mi-punto { 0%, 60%, 100% { opacity: .3; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+
+.mi-asis__opciones {
+  display: flex; gap: .45rem; overflow-x: auto; padding: .75rem 1rem;
+  border-top: .5px solid var(--mi-line); scrollbar-width: none;
+  /* Una sola fila que se desliza de lado: la conversación necesita el sitio */
+  flex-wrap: nowrap; overflow-y: hidden; -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+          mask-image: linear-gradient(90deg, #000 85%, transparent);
+}
+.mi-asis__op {
+  flex: 0 0 auto; min-height: 2.5rem; padding: .45rem .8rem;
+  background: transparent; color: var(--mi-text);
+  border: .5px solid var(--mi-fire); border-radius: 999px;
+  font: 500 .85rem/1.2 var(--mi-font-body); text-align: left; cursor: pointer; white-space: nowrap;
+}
+.mi-asis__op:hover { background: rgba(255, 107, 43, .12); }
+
+/* Sin chat libre, las preguntas son la única forma de preguntar: todas a la
+   vista, en varias filas (con chat van en una fila deslizable) */
+.mi-asis:not(.mi-asis--chat) .mi-asis__opciones {
+  flex-wrap: wrap; max-height: 12.5rem; overflow-y: auto;
+  -webkit-mask-image: none; mask-image: none; padding-bottom: .9rem;
+}
+.mi-asis:not(.mi-asis--chat) .mi-asis__op { white-space: normal; }
+
+/* Respuestas de Athenea: párrafos, listas y enlaces dentro de la burbuja */
+.mi-asis__msg p { margin: 0 0 .45rem; }
+.mi-asis__msg p:last-child, .mi-asis__msg ul:last-child { margin-bottom: 0; }
+.mi-asis__msg ul { margin: 0 0 .45rem; padding-left: 1.1rem; }
+.mi-asis__msg li { margin-bottom: .2rem; }
+.mi-asis__msg--app a { color: var(--mi-fire-soft); text-underline-offset: 2px; overflow-wrap: anywhere; }
+.mi-asis__msg--aviso {
+  align-self: center; max-width: 100%; padding: .35rem .8rem;
+  font-size: .78rem; color: var(--mi-muted); text-align: center;
+  border: .5px dashed var(--mi-line); border-radius: 999px;
+}
+
+.mi-asis__form {
+  display: flex; gap: .5rem; padding: .6rem .75rem .5rem;
+  border-top: .5px solid var(--mi-line); background: var(--mi-card);
+}
+/* 16px como mínimo: con menos, Safari en iPhone hace zoom al escribir */
+.mi-asis__texto {
+  flex: 1; min-width: 0; height: 2.75rem; padding: 0 .9rem;
+  background: var(--mi-bg); color: var(--mi-text);
+  border: .5px solid var(--mi-line); border-radius: 999px;
+  font: 400 16px/1 var(--mi-font-body);
+}
+.mi-asis__texto::placeholder { color: var(--mi-muted); }
+.mi-asis__texto:focus { outline: none; border-color: var(--mi-fire); box-shadow: 0 0 0 3px rgba(255, 107, 43, .2); }
+.mi-asis__enviar {
+  flex: 0 0 2.75rem; height: 2.75rem; position: relative;
+  background: var(--mi-fire); border: 0; border-radius: 50%; cursor: pointer;
+}
+/* Flecha de enviar dibujada con CSS: sin iconos externos */
+.mi-asis__enviar::before {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: .7rem; height: .7rem; margin: -.25rem 0 0 -.5rem;
+  border-top: 2.5px solid #0D0D0D; border-right: 2.5px solid #0D0D0D;
+  transform: rotate(45deg);
+}
+.mi-asis__enviar::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: .95rem; height: 2.5px; margin: -1.25px 0 0 -.6rem; background: #0D0D0D;
+}
+.mi-asis__enviar:disabled { opacity: .45; cursor: wait; }
+.mi-asis__sello {
+  margin: 0; padding: .1rem .9rem .6rem; background: var(--mi-card);
+  font-size: .68rem; line-height: 1.4; color: var(--mi-muted); text-align: center;
+}
+.mi-asis__sello a { color: inherit; }
+/* ---------- Avatar de Athenea ---------- */
+.mi-asis__abrir .mi-asis__cara { width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover; border: 1px solid var(--mi-fire); }
+.mi-avatar {
+  position: relative; flex: 0 0 auto; display: block;
+  width: 6rem; height: 6rem; border-radius: 50%;
+  border: 1.5px solid var(--mi-fire);
+  box-shadow: 0 0 0 3px rgba(255, 107, 43, .12), 0 0 1.2rem rgba(255, 107, 43, .25);
+  overflow: hidden; background: #0D0D0D;
+  transition: box-shadow .25s ease;
+}
+.mi-avatar__in { position: absolute; inset: 0; }
+.mi-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.mi-avatar img.is-on { opacity: 1; }
+@media (max-width: 30rem) { .mi-avatar { width: 5rem; height: 5rem; } }
+.mi-asis__cab .mi-asis__nombre { font-size: 1.6rem; }
+/* El texto de Athenea aparece palabra a palabra (asistente.js · revela) */
+.mi-pal { opacity: 0; transition: opacity .25s ease; }
+.mi-pal.is-v { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .mi-pal { opacity: 1; transition: none; } }
+/* Hablando: el aro se enciende */
+.mi-avatar.is-hablando { box-shadow: 0 0 0 3px rgba(255, 107, 43, .35), 0 0 1.8rem rgba(255, 107, 43, .55); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Respira: un 1,5 % arriba y abajo cada 4,5 s */
+  .mi-avatar__in { animation: mi-respira 4.5s ease-in-out infinite; transform-origin: 50% 80%; }
+}
+@keyframes mi-respira { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015) translateY(-1px); } }
+
+.mi-asis__oculto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}

@@ -3,240 +3,372 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Política de Privacidad · MotoIberia</title>
-<meta name="description" content="Política de privacidad de la aplicación MotoIberia — rutas en moto por la Península Ibérica.">
-<style>
-  :root {
-    --bg: #ffffff;
-    --surface: #f7f6f4;
-    --text: #1c1c1c;
-    --muted: #5a5a5a;
-    --accent: #d4531b;
-    --border: #e2ded9;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --text: #f0f0f0;
-      --muted: #a8a8a8;
-      --accent: #ff6b2b;
-      --border: #2a2a2a;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 17px/1.65 Georgia, "Times New Roman", serif;
-  }
-  header {
-    border-bottom: 3px solid var(--accent);
-    background: var(--surface);
-    padding: 2.5rem 1.25rem 2rem;
-  }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
-  header .wrap { padding: 0; max-width: 760px; margin: 0 auto; }
-  h1 { font-size: 1.9rem; margin: 0 0 .4rem; }
-  .brand {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-size: .95rem;
-    margin-bottom: .8rem;
-  }
-  .updated { color: var(--muted); font-size: .95rem; font-style: italic; }
-  main { padding: 2rem 0 4rem; }
-  h2 {
-    font-size: 1.3rem;
-    margin: 2.4rem 0 .8rem;
-    padding-bottom: .3rem;
-    border-bottom: 1px solid var(--border);
-  }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--border); padding: .55rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--surface); font-family: "Helvetica Neue", Arial, sans-serif; font-size: .85rem; }
-  .tabla-scroll { overflow-x: auto; }
-  a { color: var(--accent); }
-  footer {
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: .9rem;
-    padding: 1.5rem 1.25rem 3rem;
-    text-align: center;
-  }
-  ul { padding-left: 1.3rem; }
-  li { margin-bottom: .35rem; }
-</style>
-</head>
-<body>
+<title>MotoIberia · Rutas en moto con navegación en CarPlay</title>
+<meta name="description" content="MotoIberia: rutas en moto por la Península Ibérica con navegación en CarPlay pensada para la moto. Rutas curadas, rutas con IA y comunidad. Gratis.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://motoiberia.asist-ia.org/">
+<meta name="theme-color" content="#0D0D0D">
 
-<header>
-  <div class="wrap">
-    <div class="brand">MotoIberia</div>
-    <h1>Política de Privacidad</h1>
-    <p class="updated">Última actualización: 24 de septiembre de 2026</p>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MotoIberia">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="MotoIberia: carreteras que se viven. Y se saborean.">
+<meta property="og:description" content="MotoIberia: rutas en moto por la Península Ibérica con navegación en CarPlay pensada para la moto. Rutas curadas, rutas con IA y comunidad. Gratis.">
+<meta property="og:url" content="https://motoiberia.asist-ia.org/">
+<meta property="og:image" content="https://motoiberia.asist-ia.org/img/og-motoiberia.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MotoIberia: rutas en moto por la Península Ibérica">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+<link rel="preload" href="fonts/rajdhani-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilos.css">
+<script src="menu.js"></script>
+<script src="asistente.js" defer></script>
+<script src="movimiento.js" defer></script>
+
+<!-- Datos estructurados: la marca como responsable y la app gratuita, sin valoraciones ni reseñas. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://motoiberia.asist-ia.org/#organizacion",
+      "name": "MotoIberia",
+      "url": "https://motoiberia.asist-ia.org/",
+      "logo": "https://motoiberia.asist-ia.org/img/logo-512.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://motoiberia.asist-ia.org/#sitio",
+      "url": "https://motoiberia.asist-ia.org/",
+      "name": "MotoIberia",
+      "inLanguage": "es",
+      "publisher": { "@id": "https://motoiberia.asist-ia.org/#organizacion" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://motoiberia.asist-ia.org/#app",
+      "name": "MotoIberia",
+      "url": "https://motoiberia.asist-ia.org/",
+      "description": "Rutas en moto por la Península Ibérica con navegación en CarPlay pensada para la moto.",
+      "image": "https://motoiberia.asist-ia.org/img/og-motoiberia.jpg",
+      "screenshot": "https://motoiberia.asist-ia.org/img/iphone-explorar.webp",
+      "video": { "@type": "VideoObject", "name": "MotoIberia en marcha", "description": "Un recorrido por la app, de Explorar a una ruta con IA.", "thumbnailUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha.webp", "contentUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha.mp4", "uploadDate": "2026-10-01" },
+      "operatingSystem": "iOS 15 o posterior",
+      "applicationCategory": "TravelApplication",
+      "inLanguage": "es",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "featureList": [
+        "Navegación en CarPlay pensada para la moto",
+        "Rutas curadas por la Península, con etapas para las largas",
+        "Rutas circulares generadas con IA desde donde estás",
+        "Crea tu ruta tocando el mapa",
+        "Gasolineras en ruta",
+        "Avisos de radares fijos y de tramo de la DGT",
+        "Modo noche automático",
+        "Comunidad con publicaciones, comentarios y quedadas, con moderación",
+        "Garaje y mantenimiento de tus motos"
+      ],
+      "author": { "@id": "https://motoiberia.asist-ia.org/#organizacion" },
+      "publisher": { "@id": "https://motoiberia.asist-ia.org/#organizacion" }
+    }
+  ]
+}
+</script>
+</head>
+<body class="mi">
+
+<a class="mi-skip" href="#contenido">Saltar al contenido</a>
+
+<header class="mi-top">
+  <div class="mi-top__in">
+    <a class="mi-brand" href="./" aria-label="MotoIberia, inicio"><img src="img/logo-512.png" width="36" height="36" alt=""><span aria-hidden="true">Moto<b>Iberia</b></span></a>
+    <button class="mi-menu-btn" type="button" aria-expanded="false" aria-controls="mi-nav">Menú</button>
+    <nav class="mi-nav" id="mi-nav" aria-label="Principal">
+      <ul>
+        <li><a href="./" aria-current="page">Inicio</a></li>
+        <li><a href="./#carplay">CarPlay</a></li>
+        <li><a href="./#funciones">Funciones</a></li>
+        <li><a href="./#la-app">La app</a></li>
+        <li><a href="./#sin-cuenta">Sin cuenta</a></li>
+        <li><a href="soporte.html">Soporte</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
-<main class="wrap">
+<main id="contenido" class="mi-portada">
 
-  <p>Esta política describe qué datos personales trata la aplicación móvil
-  <strong>MotoIberia</strong>, con qué finalidad y qué derechos te asisten,
-  conforme al Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018
-  (LOPDGDD).</p>
+  <!-- ===================== CABECERA ===================== -->
+  <section class="mi-sec mi-inicio" id="inicio" aria-labelledby="t-inicio">
 
-  <h2>1. Responsable del tratamiento</h2>
-  <p>
-    <strong>Luis Villegas Cebrián</strong> (persona física)<br>
-    Xirivella, Valencia, España<br>
-    Contacto para privacidad y ejercicio de derechos:
-    <a href="mailto:AsesoramientoAsistia@outlook.es">AsesoramientoAsistia@outlook.es</a>
-  </p>
+    <div class="mi-inicio__texto">
+      <p class="mi-eyebrow">Rutas en moto por la Península Ibérica</p>
+      <h1 class="mi-h1" id="t-inicio"><span>Carreteras que se viven.</span> <span>Y se saborean.</span></h1>
+      <p class="mi-lead">Rutas por la Península y navegación en CarPlay pensada para la moto.</p>
+      <p><span class="mi-btn">Próximamente en App Store</span></p>
+      <p class="mi-nota">App gratuita. Sin cuenta para empezar.</p>
+    </div>
 
-  <h2>2. Qué datos tratamos y para qué</h2>
-  <div class="tabla-scroll">
-  <table>
-    <tr><th>Datos</th><th>Finalidad</th><th>Base jurídica</th></tr>
-    <tr>
-      <td>Email y contraseña (almacenada cifrada)</td>
-      <td>Crear y gestionar tu cuenta (autenticación mediante Supabase)</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Nombre de usuario, avatar, país y nivel</td>
-      <td>Tu perfil público en la comunidad</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Datos de tus motos y su mantenimiento</td>
-      <td>Funciones de garaje y recordatorios de mantenimiento</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td><strong>Ubicación GPS precisa</strong> durante la navegación</td>
-      <td>Guiarte por la ruta. El posicionamiento se procesa en tu dispositivo;
-          solo se envían coordenadas a los servicios de cálculo de ruta y mapas,
-          nunca asociadas a tu identidad</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Trazas GPS de rutas completadas</td>
-      <td>Tu historial y estadísticas personales (privados por defecto)</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Rutas guardadas y creadas</td>
-      <td>Guardar, repetir y compartir tus rutas</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Fotos de rutas (pueden incluir geolocalización), vídeos y
-          publicaciones</td>
-      <td>Funciones de comunidad. Son públicas y las publicas voluntariamente.
-          Ten en cuenta que, como en cualquier red social, <strong>una foto
-          publicada se puede abrir con su enlace directo sin necesidad de
-          tener cuenta</strong>; si la borras desde la app, deja de estar
-          accesible</td>
-      <td>Consentimiento</td>
-    </tr>
-    <tr>
-      <td>Uso de la función de rutas con IA (contadores)</td>
-      <td>Control de las cuotas de tu plan</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td><strong>Ubicación aproximada</strong>, redondeada a unos 1,1&nbsp;km,
-          al generar una ruta con IA</td>
-      <td>Proponerte una ruta cerca de donde estás. Se envía a Anthropic desde
-          nuestro servidor, sin tu identidad y sin tu ubicación exacta</td>
-      <td>Ejecución del contrato</td>
-    </tr>
-    <tr>
-      <td>Datos técnicos de cada generación de ruta con IA: región propuesta,
-          si había ubicación disponible (sí o no, nunca la coordenada),
-          preferencia y duración pedidas, tiempo de respuesta y si funcionó</td>
-      <td>Saber lo que cuesta el servicio y detectar cuándo falla o va lento.
-          No incluye tu ubicación ni ningún texto que hayas escrito</td>
-      <td>Interés legítimo</td>
-    </tr>
-    <tr>
-      <td>Reportes de radares que envíes: posición del radar, tipo, límite y
-          sentido</td>
-      <td>Avisar al resto de la comunidad. Quién ha reportado cada radar queda
-          registrado pero <strong>no es visible para los demás usuarios</strong></td>
-      <td>Interés legítimo</td>
-    </tr>
-  </table>
-  </div>
-  <p>No utilizamos tus datos para publicidad ni elaboramos perfiles con fines
-  comerciales. No hay decisiones automatizadas con efectos jurídicos sobre ti.</p>
+    <div class="mi-escena">
 
-  <h2>3. Dónde se alojan tus datos</h2>
-  <p>Los datos de tu cuenta se alojan en la infraestructura de
-  <strong>Supabase</strong> (base de datos PostgreSQL), en servidores situados
-  <strong>en la Unión Europea (Irlanda)</strong>, con seguridad a nivel de fila:
-  tus datos privados solo son accesibles con tu propia sesión.</p>
+      <figure class="mi-iphone" data-paralaje="-0.06">
+        <div class="mi-iphone__in mi-iphone__in--video">
+          <video class="mi-video" width="600" height="1066" poster="img/app-en-marcha.webp" autoplay muted loop playsinline preload="auto" aria-label="Vídeo: un recorrido por la app, de Explorar a una ruta con IA">
+            <source src="img/app-en-marcha.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
 
-  <p>Algunos proveedores técnicos de los que se enumeran abajo pueden tratar
-  datos fuera del Espacio Económico Europeo. Cuando ocurre, se realiza con las
-  garantías previstas en el RGPD (cláusulas contractuales tipo aprobadas por la
-  Comisión Europea o marcos de adecuación vigentes).</p>
+      <!-- CarPlay real, en vista dividida: mapa, siguiente maniobra y música. -->
+      <figure class="mi-pantalla" data-paralaje="0.05">
+        <div class="mi-pantalla__in">
+          <img src="img/carplay-cabecera.webp" width="1280" height="720" alt="MotoIberia en la pantalla de CarPlay de una moto, en vista dividida: el mapa con la ruta, la siguiente maniobra a 278 metros y la música" decoding="async" fetchpriority="high">
+        </div>
+      </figure>
 
-  <h2>4. Con quién se comparten</h2>
-  <p><strong>No vendemos tus datos ni usamos publicidad de terceros.</strong>
-  Empleamos únicamente proveedores técnicos necesarios para el servicio:</p>
-  <ul>
-    <li><strong>Supabase</strong> — alojamiento de base de datos, autenticación y archivos.</li>
-    <li><strong>Mapbox</strong> — cálculo y recálculo de rutas. Recibe la
-      secuencia de coordenadas de cada trayecto que calculas, junto con tu
-      dirección IP, pero no tu nombre ni tu cuenta. Conviene que lo sepas con
-      claridad: aunque no viaje tu identidad, un recorrido completo es un dato
-      que puede decir mucho de ti.</li>
-    <li><strong>Anthropic</strong> — generación de rutas con IA: recibe tu petición de
-        ruta únicamente desde nuestro servidor, nunca directamente desde tu dispositivo.</li>
-    <li><strong>OpenFreeMap / OpenStreetMap</strong> — visualización de mapas.</li>
-    <li><strong>Geoapify</strong> — búsqueda de lugares y direcciones.</li>
-  </ul>
+    </div>
 
-  <h2>5. Cuánto tiempo conservamos tus datos</h2>
-  <p>Mientras tu cuenta exista. Los contadores de uso de la función de IA se
-  conservan un máximo de 12 meses. Al eliminar tu cuenta, todos tus datos se
-  borran de forma inmediata e irreversible.</p>
+    <div class="mi-route mi-route--anim" aria-hidden="true"></div>
+  </section>
 
-  <h2>6. Tus derechos (RGPD)</h2>
-  <p>Puedes ejercer tus derechos de acceso, rectificación, supresión,
-  portabilidad, limitación y oposición escribiendo a
-  <a href="mailto:AsesoramientoAsistia@outlook.es">AsesoramientoAsistia@outlook.es</a>.</p>
-  <p>Además, puedes <strong>eliminar tu cuenta directamente desde la app</strong>
-  (Perfil → Eliminar cuenta): el borrado de todos tus datos es inmediato e
-  irreversible.</p>
-  <p>Si consideras que no hemos atendido correctamente tus derechos, puedes
-  reclamar ante la Agencia Española de Protección de Datos
-  (<a href="https://www.aepd.es" rel="noopener">aepd.es</a>).</p>
+  <!-- ===================== MARCA ===================== -->
+  <section class="mi-sec" aria-label="La marca">
+    <div class="mi-marca" data-revela>
+      <div class="mi-marca__texto">
+        <p class="mi-marca__rotulo" aria-hidden="true">Moto<b>Iberia</b></p>
+        <p class="mi-marca__lema">Navega <i>·</i> Explora <i>·</i> Comparte</p>
+        <p class="mi-marca__pie">Rutas <i>·</i> España y Portugal</p>
+      </div>
+      <figure class="mi-marca__mapa">
+        <img src="img/marca-mapa.webp" width="740" height="764" alt="" loading="lazy" decoding="async">
+        <span class="mi-wp" style="--x:20%;--y:57.6%;--d:0s"></span>
+        <span class="mi-wp" style="--x:56.5%;--y:57.9%;--d:.45s"></span>
+        <span class="mi-wp" style="--x:79.2%;--y:18.3%;--d:.9s"></span>
+      </figure>
+    </div>
+  </section>
 
-  <h2>7. Menores de edad</h2>
-  <p>MotoIberia no está dirigida a menores de <strong>16 años</strong>. No
-  creamos cuentas conscientemente para menores de esa edad; si detectamos una,
-  la eliminaremos.</p>
+  <div class="mi-carril" aria-hidden="true"><span></span></div>
 
-  <h2>8. Cambios en esta política</h2>
-  <p>Si esta política cambia de forma sustancial, te lo notificaremos dentro de
-  la app antes de que el cambio entre en vigor. La versión vigente estará
-  siempre publicada en esta página.</p>
+  <!-- ===================== CARPLAY ===================== -->
+  <section class="mi-sec" id="carplay" aria-labelledby="t-carplay">
+    <div class="mi-carplay" data-revela>
 
-  <p style="margin-top:2.5rem">
-    Puedes consultar también nuestros
-    <a href="./terminos.html">Términos de Uso</a>.
-  </p>
+      <div class="mi-carplay__texto">
+        <p class="mi-pk"><span>PK 01</span> CarPlay</p>
+        <h2 class="mi-h2" id="t-carplay">Rueda. El móvil se queda en el bolsillo.</h2>
+        <p class="mi-p">La navegación de Moto<b class="mi-i">Iberia</b> está pensada para ir en moto. La llevas en la pantalla de CarPlay y el iPhone puede seguir bloqueado en el bolsillo. Probada y validada rodando de verdad.</p>
+        <p><a class="mi-enlace" href="soporte.html#carplay">Qué necesitas para CarPlay</a></p>
+      </div>
+
+      <!-- CarPlay en marcha, vista dividida. Vídeo sin sonido, en bucle; proporción real de la pantalla (1280×696). -->
+      <figure class="mi-pantalla" data-revela>
+        <div class="mi-pantalla__in mi-pantalla__in--video">
+          <video class="mi-video" width="1280" height="696" poster="img/carplay-rodando.webp" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo: MotoIberia navegando en la pantalla de CarPlay de una moto, con la cuenta atrás hasta la rotonda y la música al lado">
+            <source src="img/carplay-rodando.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
+
+    </div>
+  </section>
+
+  <div class="mi-carril" aria-hidden="true"><span></span></div>
+
+  <!-- ===================== FUNCIONES ===================== -->
+  <section class="mi-sec" id="funciones" aria-labelledby="t-funciones">
+    <p class="mi-pk"><span>PK 02</span> Funciones</p>
+    <h2 class="mi-h2" id="t-funciones">Lo que hace hoy Moto<b class="mi-i">Iberia</b></h2>
+
+    <ul class="mi-funciones">
+
+      <li data-revela style="--i:0">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a3.5 3.5 0 0 0 0-7h-4a3.5 3.5 0 0 1 0-7h6"/></svg>
+            <h3>Rutas curadas</h3>
+            <span class="mi-card__resumen">Rutas seleccionadas por toda la Península.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Las rutas largas vienen con etapas, para dividir el viaje en tramos.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:1">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="1.2"/></svg>
+            <h3>Rutas con IA</h3>
+            <span class="mi-card__resumen">Rutas circulares desde donde estás.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Para proponértela solo se usa tu ubicación aproximada. Necesita cuenta.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:2">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.4-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.6 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg>
+            <h3>Mi ruta</h3>
+            <span class="mi-card__resumen">Crea tu ruta tocando el mapa.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Marca los puntos tocando el mapa o buscando una dirección. La ruta sale siempre desde donde estás y la navegas al momento.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:3">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h12"/><path d="M7 8h4"/><path d="M14 10h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8.5L18.5 6"/></svg>
+            <h3>Gasolineras en ruta</h3>
+            <span class="mi-card__resumen">Ves las gasolineras de tu recorrido.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Las que te encuentras a lo largo de la ruta que llevas.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:0">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l5.5-5.5"/></svg>
+            <h3>Avisos de radar</h3>
+            <span class="mi-card__resumen">Radares fijos y de tramo de la DGT.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Radares fijos y de tramo de la DGT. No incluye radares municipales ni los de Cataluña, el País Vasco o Portugal.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:1">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+            <h3>Modo noche</h3>
+            <span class="mi-card__resumen">Cambia solo.</span>
+          </summary>
+          <div class="mi-card__mas"><p>La app pasa sola a modo noche, sin que toques nada.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:2">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21 19"/></svg>
+            <h3>Comunidad</h3>
+            <span class="mi-card__resumen">Publicaciones, comentarios y quedadas.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Con moderación: cada publicación y comentario se puede denunciar, y puedes bloquear a quien quieras. Las denuncias se revisan en menos de 24 horas.</p></div>
+        </details>
+      </li>
+
+      <li data-revela style="--i:3">
+        <details class="mi-card">
+          <summary>
+            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.2L3.5 17.4a1.8 1.8 0 0 0 2.5 2.5l5.7-5.7a4 4 0 0 0 5.2-5.3l-2.4 2.4-2.1-.5-.5-2.1z"/></svg>
+            <h3>Garaje y mantenimiento</h3>
+            <span class="mi-card__resumen">Tus motos, al día.</span>
+          </summary>
+          <div class="mi-card__mas"><p>Guarda tus motos y recibe recordatorios de mantenimiento.</p></div>
+        </details>
+      </li>
+
+    </ul>
+  </section>
+
+  <div class="mi-carril" aria-hidden="true"><span></span></div>
+
+  <!-- ===================== LA APP POR DENTRO ===================== -->
+  <section class="mi-sec" id="la-app" aria-labelledby="t-la-app">
+    <p class="mi-pk"><span>PK 03</span> La app por dentro</p>
+    <div class="mi-galeria__cab">
+      <h2 class="mi-h2" id="t-la-app">Pantallas reales, sin retoques.</h2>
+      <div class="mi-galeria__flechas">
+        <button type="button" class="mi-flecha" data-galeria="-1" aria-label="Pantalla anterior"></button>
+        <button type="button" class="mi-flecha mi-flecha--sig" data-galeria="1" aria-label="Pantalla siguiente"></button>
+      </div>
+    </div>
+    <ul class="mi-galeria" id="galeria" tabindex="0" aria-label="Capturas de la app; desliza para ver más">
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-bienvenida.webp" width="600" height="1304" alt="Pantalla de bienvenida de MotoIberia con el emblema" loading="lazy" decoding="async"></div>
+          <figcaption><b>Al arrancar</b> El emblema, y a rodar.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-explorar.webp" width="600" height="1304" alt="Pantalla Explorar: el mapa de la Península con las rutas" loading="lazy" decoding="async"></div>
+          <figcaption><b>Explorar</b> Toda la Península en un mapa.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma mi-toma--ancha">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/ruta-etapa.webp" width="900" height="960" alt="Mapa de la etapa 3 de la ruta curada de Cabo de Gata, de Vélez Blanco hacia Granada" loading="lazy" decoding="async"></div>
+          <figcaption><b>Rutas curadas, por etapas</b> Cabo de Gata · Etapa 3: de Vélez Blanco hacia Granada, 308 km.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-ruta-ia.webp" width="600" height="1304" alt="Pantalla Ruta con IA: tipo de experiencia y tiempo disponible" loading="lazy" decoding="async"></div>
+          <figcaption><b>Ruta con IA</b> Dices qué te apetece y cuánto tiempo tienes.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-ajustes.webp" width="600" height="1304" alt="Ajustes de la ruta: autopistas, peajes y tramos sin asfaltar" loading="lazy" decoding="async"></div>
+          <figcaption><b>Carretera secundaria</b> Sin autovías ni peajes, salvo que tú los quieras.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-voz.webp" width="600" height="1304" alt="Idioma de la guía por voz: español, portugués, inglés, francés, alemán e italiano" loading="lazy" decoding="async"></div>
+          <figcaption><b>Guía por voz</b> En seis idiomas.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-toma">
+        <figure>
+          <div class="mi-toma__marco"><img src="img/iphone-garaje.webp" width="600" height="1304" alt="Mi Garaje con la moto activa y sus datos" loading="lazy" decoding="async"></div>
+          <figcaption><b>Tu garaje</b> La moto activa, con sus datos y su mantenimiento.</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </section>
+
+  <div class="mi-carril" aria-hidden="true"><span></span></div>
+
+  <!-- ===================== SIN CUENTA ===================== -->
+  <section class="mi-sec" id="sin-cuenta" aria-labelledby="t-sin-cuenta">
+    <div class="mi-sincuenta" data-revela>
+      <div>
+        <p class="mi-pk"><span>PK 04</span> Sin cuenta</p>
+        <h2 class="mi-h2" id="t-sin-cuenta">Sin cuenta para empezar.</h2>
+      </div>
+      <div>
+        <p class="mi-p"><strong>Sin cuenta:</strong> ver las rutas curadas, navegarlas (también en CarPlay), crear tu ruta en «Mi ruta» y ver gasolineras y talleres.</p>
+        <p class="mi-p"><strong>Con cuenta:</strong> rutas con IA, comunidad, guardar rutas, subir fotos, historial, garaje y mantenimiento.</p>
+        <p><span class="mi-btn">Próximamente en App Store</span></p>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<footer>
-  MotoIberia · Luis Villegas Cebrián · Xirivella, Valencia, España
+<footer class="mi-foot">
+  <div class="mi-foot__in">
+    <nav aria-label="Pie de página">
+      <ul>
+        <li><a href="privacidad.html">Privacidad</a></li>
+        <li><a href="terminos.html">Términos</a></li>
+        <li><a href="soporte.html">Soporte</a></li>
+        <li><a href="mailto:AsesoramientoAsistia@outlook.es">AsesoramientoAsistia@outlook.es</a></li>
+      </ul>
+    </nav>
+    <p>© Moto<b class="mi-i">Iberia</b></p>
+  </div>
 </footer>
 
 </body>

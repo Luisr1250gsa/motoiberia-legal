@@ -5,12 +5,17 @@
    00 es el saludo y 01-09 siguen el orden de PREGUNTAS) dice un resumen y
    el texto va completo. No se envía nada a ningún servidor.
 
-   Avatar: cuatro fotogramas (img/athenea/*.webp: base, boca entreabierta,
-   boca abierta y ojos cerrados). La boca sigue a la voz: el mismo audio se
-   decodifica aparte y se mide su volumen cada 40 ms. Parpadeo y respiración
-   en reposo.
+   Avatar: cuatro fotogramas (img/athenea/240/*.webp: base, boca
+   entreabierta, boca abierta y ojos cerrados). Solo la cara del botón se
+   descarga con la página; el resto, al abrir el panel. La boca sigue a la
+   voz con la apertura ya calculada para cada audio (audio/asis/boca.json:
+   volumen cada 40 ms, de 0 a 100); si faltara, se mide en el navegador.
+   Parpadeo y respiración en reposo.
 
-   La voz está encendida por defecto; el botón «Voz» la apaga. */
+   La voz está encendida por defecto; el botón «Voz» la apaga. Calla al
+   cambiar de pestaña o bloquear el móvil. En la portada, la pregunta de la
+   sección que se está viendo va primero, y un bocadillo asoma una sola vez
+   si en un rato no se ha abierto el panel. */
 (function () {
   /* Conversación libre: desactivada. */
   var CHAT_LIBRE = false;
@@ -133,7 +138,7 @@
 
   /* ---------- Avatar ---------- */
   var FOTOGRAMAS = ['base', 'boca-media', 'boca-abierta', 'ojos-cerrados'];
-  FOTOGRAMAS.forEach(function (k) { var i = new Image(); i.src = 'img/athenea/' + k + '.webp'; });
+  var CARAS = 'img/athenea/240/';
   var caras = [];          // los avatares animados de la página
   var envolvente = null;   // nivel de la voz cada 40 ms, de 0 a 1
   var hablando = false, bucle = 0, ultimo = 0, actual = 'base';
@@ -141,6 +146,9 @@
 
   function cara(k) {
     if (k === actual) return;
+    // Un fotograma que aún no ha llegado no se muestra: se queda el anterior
+    var im = caras[0] && caras[0].querySelector('img[data-k="' + k + '"]');
+    if (im && !(im.complete && im.naturalWidth)) return;
     actual = k;
     caras.forEach(function (c) {
       c.querySelectorAll('img').forEach(function (im) { im.classList.toggle('is-on', im.getAttribute('data-k') === k); });
@@ -148,6 +156,7 @@
   }
   function marcaHablando(si) {
     hablando = si;
+    document.documentElement.classList.toggle('mi-athenea-habla', si);
     caras.forEach(function (c) { c.classList.toggle('is-hablando', si); });
   }
   function mideVoz(buf, cb) {
@@ -172,20 +181,42 @@
       }, function () { cb(null); });
     } catch (e) { cb(null); }
   }
+  /* Apertura de la boca ya calculada para los audios fijos */
+  var boca = null;     // promesa de boca.json, pedida al abrir el panel
+  var turnoEnv = 0;    // la medida que llega tarde de un audio anterior no vale
+  function cargaBoca() {
+    if (boca) return;
+    boca = fetch('audio/asis/boca.json')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        Object.keys(j).forEach(function (k) {
+          cacheEnv[Number(k)] = j[k].map(function (x) { return x / 100; });
+        });
+      })
+      .catch(function () {});
+  }
   function envDeFichero(n) {
     envolvente = null;
     if (cacheEnv[n]) { envolvente = cacheEnv[n]; return; }
-    fetch('audio/asis/' + (n < 10 ? '0' : '') + n + '.m4a')
-      .then(function (r) { return r.arrayBuffer(); })
-      .then(function (b) { mideVoz(b, function (v) { cacheEnv[n] = v; envolvente = v; }); })
-      .catch(function () {});
+    var turno = ++turnoEnv;
+    (boca || Promise.resolve()).then(function () {
+      if (turno !== turnoEnv) return;
+      if (cacheEnv[n]) { envolvente = cacheEnv[n]; return; }
+      fetch('audio/asis/' + (n < 10 ? '0' : '') + n + '.m4a')
+        .then(function (r) { return r.arrayBuffer(); })
+        .then(function (b) {
+          mideVoz(b, function (v) { cacheEnv[n] = v; if (turno === turnoEnv) envolvente = v; });
+        })
+        .catch(function () {});
+    });
   }
   function envDeBase64(b64) {
     envolvente = null;
+    var turno = ++turnoEnv;
     try {
       var bin = atob(b64), u = new Uint8Array(bin.length);
       for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
-      mideVoz(u.buffer, function (v) { envolvente = v; });
+      mideVoz(u.buffer, function (v) { if (turno === turnoEnv) envolvente = v; });
     } catch (e) {}
   }
   function anima(t) {
@@ -222,7 +253,7 @@
   function avatarHTML(clase) {
     return '<span class="mi-avatar ' + clase + '" aria-hidden="true"><span class="mi-avatar__in">' +
       FOTOGRAMAS.map(function (k) {
-        return '<img src="img/athenea/' + k + '.webp" data-k="' + k + '" alt=""' + (k === 'base' ? ' class="is-on"' : '') + '>';
+        return '<img data-src="' + CARAS + k + '.webp" data-k="' + k + '" alt=""' + (k === 'base' ? ' class="is-on"' : '') + '>';
       }).join('') + '</span></span>';
   }
 
@@ -272,7 +303,7 @@
     raiz.className = 'mi-asis' + (CHAT_LIBRE ? ' mi-asis--chat' : '');
     raiz.innerHTML =
       '<button type="button" class="mi-asis__abrir" aria-expanded="false" aria-controls="mi-asis-panel">' +
-        '<img class="mi-asis__cara" src="img/athenea/base.webp" width="40" height="40" alt=""><span>Pregunta a Athenea</span></button>' +
+        '<img class="mi-asis__cara" src="' + CARAS + 'base.webp" width="40" height="40" alt=""><span>Pregunta a Athenea</span></button>' +
       '<section class="mi-asis__panel" id="mi-asis-panel" role="dialog" aria-label="Athenea, asistente de MotoIberia" hidden>' +
         '<header class="mi-asis__cab">' +
           avatarHTML('mi-avatar--cab') +
@@ -381,8 +412,10 @@
       revelando = { id: id, fin: fin };
     }
 
+    var botones = [];
     PREGUNTAS.forEach(function (p, i) {
       var b = document.createElement('button');
+      botones.push(b);
       b.type = 'button';
       b.className = 'mi-asis__op';
       b.textContent = p[0];
@@ -441,6 +474,10 @@
       abrir.setAttribute('aria-expanded', si ? 'true' : 'false');
       raiz.classList.toggle('is-abierto', si);
       if (si) {
+        quitaAviso();
+        cargaCaras();
+        cargaBoca();
+        sugiere();
         if (!saludado) {
           saludado = true;
           burbuja(CHAT_LIBRE
@@ -467,6 +504,70 @@
         voz.setAttribute('aria-pressed', conVoz ? 'true' : 'false');
         if (!conVoz) calla();
       });
+    }
+
+    /* Los fotogramas del panel se descargan la primera vez que se abre */
+    function cargaCaras() {
+      raiz.querySelectorAll('.mi-avatar img[data-src]').forEach(function (im) {
+        im.src = im.getAttribute('data-src');
+        im.removeAttribute('data-src');
+      });
+    }
+
+    /* Calla al cambiar de pestaña o bloquear el móvil */
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) {
+        calla();
+        if (revelando) revelando.fin();
+      }
+    });
+
+    /* La pregunta de la sección que se está viendo va primero (portada).
+       Cuenta la sección que cruza el centro de la pantalla. */
+    var SUGERENCIAS = { 'carplay': 0, 'funciones': 1, 'sin-cuenta': 2 };
+    var vista = null;
+    if ('IntersectionObserver' in window) {
+      var vigia = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) vista = e.target.id;
+          else if (vista === e.target.id) vista = null;
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      Object.keys(SUGERENCIAS).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) vigia.observe(el);
+      });
+    }
+    function sugiere() {
+      botones.forEach(function (b) { b.classList.remove('is-sugerida'); opciones.appendChild(b); });
+      var n = SUGERENCIAS[vista];
+      if (n === undefined) return;
+      botones[n].classList.add('is-sugerida');
+      opciones.insertBefore(botones[n], opciones.firstChild);
+    }
+
+    /* Bocadillo: en la portada, una vez, a los 20 s si no se ha abierto el
+       panel; se va solo a los 12 s. Sin sonido. */
+    var aviso = null, tAviso = 0;
+    function quitaAviso() {
+      clearTimeout(tAviso);
+      if (aviso) aviso.hidden = true;
+    }
+    if (document.getElementById('inicio')) {
+      aviso = document.createElement('div');
+      aviso.className = 'mi-asis__aviso';
+      aviso.hidden = true;
+      aviso.innerHTML =
+        '<button type="button" class="mi-asis__aviso-txt">Hola, soy <b>Athenea</b>. Elige una pregunta y te respondo.</button>' +
+        '<button type="button" class="mi-asis__aviso-x" aria-label="Cerrar el aviso"></button>';
+      raiz.insertBefore(aviso, abrir);
+      aviso.querySelector('.mi-asis__aviso-txt').addEventListener('click', function () { muestra(true); });
+      aviso.querySelector('.mi-asis__aviso-x').addEventListener('click', function () { quitaAviso(); abrir.focus(); });
+      tAviso = setTimeout(function () {
+        if (saludado || !panel.hidden) return;
+        aviso.hidden = false;
+        tAviso = setTimeout(quitaAviso, 12000);
+      }, 20000);
     }
   });
 })();

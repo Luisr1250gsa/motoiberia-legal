@@ -140,6 +140,7 @@ html:has(body.mi) {
 .mi .mi-brand {
   display: inline-flex;
   align-items: center;
+  min-height: 2.75rem;
   gap: .6rem;
   font: 700 1.55rem/1 var(--mi-font-head);
   letter-spacing: .01em;
@@ -162,7 +163,7 @@ html:has(body.mi) {
 }
 .mi .mi-nav a {
   display: block;
-  padding: .8rem .85rem;
+  padding: .85rem .85rem;
   border-radius: var(--mi-r-s);
   font: 600 1.1rem/1 var(--mi-font-head);
   letter-spacing: .02em;
@@ -331,7 +332,7 @@ html:has(body.mi) {
   padding: 0;
   list-style: none;
 }
-.mi .mi-foot a { color: var(--mi-text); text-decoration: none; padding: .35rem 0; display: inline-block; }
+.mi .mi-foot a { color: var(--mi-text); text-decoration: none; min-height: 2.75rem; display: inline-flex; align-items: center; }
 .mi .mi-foot a:hover { color: var(--mi-fire); text-decoration: underline; }
 .mi .mi-foot a[aria-current="page"] { color: var(--mi-fire); }
 .mi-foot p { margin: 0; color: var(--mi-muted); font-size: .9rem; line-height: 1.6; }
@@ -390,9 +391,9 @@ html:has(body.mi) {
 /* ---------- Cabecera de la portada ---------- */
 .mi-inicio {
   display: grid;
-  gap: 2.5rem;
+  gap: 1.5rem;
   align-items: center;
-  padding-top: clamp(2.5rem, 7vw, 5rem);
+  padding-top: clamp(1.75rem, 6vw, 5rem);
 }
 .mi-inicio .mi-route { grid-column: 1 / -1; margin-top: .5rem; }
 
@@ -427,23 +428,10 @@ html:has(body.mi) {
   line-height: 1.55;
 }
 
-/* ---------- Marcos de las capturas (iPhone naranja, CarPlay azul) ---------- */
-.mi-iphone,
-.mi-pantalla { margin: 0; background: #000; }
-
-.mi-iphone {
-  width: min(14rem, 62vw);
-  padding: .5rem;
-  border: 1px solid var(--mi-fire);
-  border-radius: 2.2rem;
-  box-shadow: 0 0 2.4rem rgba(255, 107, 43, .28);
-}
-.mi-iphone__in {
-  aspect-ratio: 600 / 1304;
-  border-radius: 1.7rem;
-}
-
+/* ---------- Marco de CarPlay (azul) ---------- */
 .mi-pantalla {
+  margin: 0;
+  background: #000;
   padding: .35rem;
   border: 1px solid var(--mi-blue);
   border-radius: 1rem;
@@ -454,14 +442,8 @@ html:has(body.mi) {
   border-radius: .7rem;
 }
 
-.mi-iphone__in,
-.mi-pantalla__in { overflow: hidden; background: var(--mi-card); }
-.mi-iphone img,
+.mi-pantalla__in { position: relative; overflow: hidden; background: var(--mi-card); }
 .mi-pantalla img { display: block; width: 100%; height: 100%; object-fit: cover; }
-/* El vídeo de la app mide 600x1066 (9:16), más ancho que una captura de
-   iPhone (600x1304). Con el marco de captura, «cover» le recortaba ~18 %
-   por los lados: este marco tiene la forma exacta del vídeo y se ve entero. */
-.mi-iphone__in--video { aspect-ratio: 600 / 1066; }
 /* El vídeo de CarPlay rodando tiene la proporción real de la pantalla del Carpuride */
 .mi-pantalla__in--video { aspect-ratio: 1280 / 696; }
 .mi-video { display: block; width: 100%; height: 100%; object-fit: cover; background: #0D0D0D; }
@@ -479,27 +461,145 @@ html:has(body.mi) {
   line-height: 1.4;
 }
 
-/* Composición: iPhone a la derecha y pantalla de CarPlay solapada */
-.mi-escena { display: grid; }
-.mi-escena .mi-iphone { justify-self: end; }
-.mi-escena .mi-pantalla {
+/* ---------- Cabecera: del bolsillo a la moto ----------
+   El iPhone con la app detrás y la pantalla de CarPlay delante, solapadas.
+   La línea de ruta sale de la frase, pasa por el iPhone y llega a CarPlay. */
+.mi-dos { position: relative; display: grid; }
+.mi-movil {
   position: relative;
-  z-index: 2;
-  justify-self: start;
-  width: min(19rem, 86%);
-  margin-top: -4.5rem;
+  z-index: 1;
+  justify-self: end;
+  width: 7.5rem;
+  margin: 0 .75rem 0 0;
+  padding: .3rem;
+  background: #000;
+  border: 1px solid var(--mi-fire);
+  border-radius: 1.3rem;
+  box-shadow: 0 0 1.8rem rgba(255, 107, 43, .28);
 }
+.mi-movil__in {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 480 / 852;
+  border-radius: 1rem;
+  background: var(--mi-card);
+}
+.mi-heroe { position: relative; z-index: 2; width: 100%; margin-top: -4.5rem; }
+/* En el iPhone pequeño, el círculo se ve menor pero la zona táctil sigue en 44 px */
+.mi-movil .mi-vbtn {
+  right: .1rem;
+  bottom: .1rem;
+  border: 0;
+  background: radial-gradient(circle, rgba(13, 13, 13, .75) 0 .95rem, transparent 1rem);
+}
+
+/* Brillo de llegada: cada pantalla se enciende cuando la línea la toca */
+.mi-heroe::after, .mi-movil::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.mi-heroe::after { box-shadow: 0 0 0 1px var(--mi-blue), 0 0 3.2rem rgba(122, 184, 245, .45); }
+.mi-movil::after { box-shadow: 0 0 0 1px var(--mi-fire), 0 0 2.6rem rgba(255, 107, 43, .5); }
 
 @media (min-width: 60rem) {
   .mi-inicio {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-    gap: 3rem 2rem;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 3rem;
   }
-  /* 38rem: el recuadro de CarPlay roza el pie del vídeo sin taparlo */
-  .mi-escena { display: block; position: relative; min-height: 38rem; }
-  .mi-escena .mi-iphone { position: absolute; right: 3%; top: 0; width: 15rem; }
-  .mi-escena .mi-pantalla { position: absolute; left: 0; bottom: 1rem; width: min(23rem, 72%); margin: 0; }
+  .mi-movil { justify-self: start; width: 13rem; margin: 0 0 0 2%; padding: .45rem; border-radius: 2rem; }
+  .mi-movil__in { border-radius: 1.6rem; }
+  .mi-movil .mi-vbtn { right: .6rem; bottom: .6rem; border: .5px solid rgba(240, 240, 240, .3); background: rgba(13, 13, 13, .72); }
+  /* CarPlay, en perspectiva como montada en el manillar, tapa el pie del iPhone */
+  .mi-heroe {
+    justify-self: end;
+    width: 86%;
+    margin-top: -7.5rem;
+    transform: perspective(1600px) rotateY(-10deg) rotateX(2deg);
+    transform-origin: 100% 50%;
+  }
 }
+
+/* ---------- Línea de ruta de la cabecera (la traza movimiento.js) ---------- */
+.mi-trazado {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+}
+.mi-trazado__linea { stroke: var(--mi-fire); stroke-width: 2.5; }
+.mi-trazado__brillo { stroke: var(--mi-fire); stroke-width: 10; opacity: .16; }
+.mi-trazado__wp {
+  fill: var(--mi-bg);
+  stroke: var(--mi-fire);
+  stroke-width: 2.5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mi-trazado:not(.is-listo) { display: none; }
+
+/* Una sola pasada al cargar: la línea avanza a velocidad constante, se
+   enciende el punto del iPhone y luego el de CarPlay. Los tiempos
+   (--mi-dur, --mi-t1, --mi-t2) los pone movimiento.js según el largo. */
+@media (prefers-reduced-motion: no-preference) {
+  .mi-js .mi-heroe::after, .mi-js .mi-movil::after { opacity: 0; }
+  .mi-inicio.is-anim .mi-trazado path {
+    stroke-dasharray: var(--mi-largo) var(--mi-largo);
+    animation: mi-dibuja var(--mi-dur, 1.4s) .5s linear both;
+  }
+  .mi-inicio.is-anim .mi-trazado__wp--1 { animation: mi-enciende-wp .45s var(--mi-t1, 1.1s) cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-inicio.is-anim .mi-trazado__wp--2 { animation: mi-enciende-wp .45s var(--mi-t2, 1.9s) cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-inicio.is-anim .mi-movil::after { animation: mi-nodo .6s var(--mi-t1, 1.1s) both; }
+  .mi-inicio.is-anim .mi-heroe::after { animation: mi-nodo .7s var(--mi-t2, 1.9s) both; }
+}
+@keyframes mi-dibuja { from { stroke-dashoffset: var(--mi-largo); } to { stroke-dashoffset: 0; } }
+@keyframes mi-enciende-wp { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
+
+/* ---------- Botón de pausa de los vídeos (lo pone movimiento.js) ---------- */
+.mi-vbtn {
+  position: absolute;
+  right: .6rem;
+  bottom: .6rem;
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(13, 13, 13, .72);
+  border: .5px solid rgba(240, 240, 240, .3);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.mi-vbtn::before, .mi-vbtn::after {    /* pausa: dos barras */
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 3px;
+  height: .9rem;
+  margin-top: -.45rem;
+  border-radius: 1px;
+  background: var(--mi-text);
+}
+.mi-vbtn::before { left: calc(50% - 5px); }
+.mi-vbtn::after { left: calc(50% + 2px); }
+.mi-vbtn.is-parado::after { display: none; }
+.mi-vbtn.is-parado::before {          /* reproducir: triángulo */
+  left: calc(50% - 4px);
+  width: 0;
+  height: 0;
+  margin-top: -.5rem;
+  background: none;
+  border-radius: 0;
+  border-style: solid;
+  border-width: .5rem 0 .5rem .8rem;
+  border-color: transparent transparent transparent var(--mi-fire);
+}
+.mi-vbtn:hover { border-color: var(--mi-fire); }
 
 /* ---------- Bloque CarPlay (el diferencial) ---------- */
 .mi-carplay {
@@ -535,21 +635,10 @@ html:has(body.mi) {
   font: 600 1rem/1.2 var(--mi-font-head);
   letter-spacing: .03em;
 }
-.mi .mi-enlace { color: var(--mi-blue); font-weight: 600; }
+.mi .mi-enlace { color: var(--mi-blue); font-weight: 600; display: inline-flex; align-items: center; min-height: 2.75rem; }
 .mi .mi-enlace:hover { color: #A9D0F8; }
 
 /* ---------- Funciones: tarjetas desplegables ---------- */
-.mi-funciones {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr;
-  align-items: start;
-  margin: 2rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-@media (min-width: 40rem) { .mi-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 72rem) { .mi-funciones { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 .mi-card {
   position: relative;
@@ -580,7 +669,6 @@ html:has(body.mi) {
   cursor: pointer;
 }
 .mi-card summary::-webkit-details-marker { display: none; }
-@media (min-width: 72rem) { .mi-funciones .mi-card summary { min-height: 10.4rem; } }
 .mi-card summary::after {      /* flecha que gira al abrir */
   content: "";
   position: absolute;
@@ -619,6 +707,194 @@ html:has(body.mi) {
 }
 .mi-card__mas p { margin: 0; font-size: .95rem; line-height: 1.6; }
 
+/* ---------- Funciones: la ruta de paradas ----------
+   Cada función es un punto de paso de una carretera. La línea naranja
+   avanza hasta cada parada al llegar a ella (movimiento.js) y, al tocar
+   una, su tarjeta sale de la ruta con el mismo trazo de la cabecera.
+   Sin JS se ve una línea recta; con «reducir movimiento», todo quieto. */
+.mi-ruta { position: relative; margin: 2.5rem 0 0; --mi-x: 1.1rem; }
+.mi-ruta::before {              /* sin JS: la ruta recta */
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  left: calc(1.1rem - 1px);
+  width: 2px;
+  background: var(--mi-fire);
+  opacity: .5;
+}
+.mi-ruta.is-lista::before { display: none; }
+.mi-ruta__svg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  fill: none;
+  stroke-linecap: round;
+}
+.mi-ruta.is-lista .mi-ruta__svg { display: block; }
+.mi-ruta__base { stroke: rgba(240, 240, 240, .2); stroke-width: 3; stroke-dasharray: 14 12; stroke-linecap: butt; }
+.mi-ruta__linea { stroke: var(--mi-fire); stroke-width: 3; }
+.mi-ruta__brillo { stroke: var(--mi-fire); stroke-width: 12; opacity: .14; }
+.mi-ruta__lista {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: .35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mi-parada:nth-child(even) { --mi-x: 2rem; }    /* la ruta hace curvas */
+
+.mi-parada summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  min-height: 3.5rem;
+  padding: .75rem .6rem .75rem 3.4rem;
+  border-radius: var(--mi-r-m);
+  list-style: none;
+  cursor: pointer;
+}
+.mi-parada summary::-webkit-details-marker { display: none; }
+.mi-parada summary::after {      /* flecha: apunta a la tarjeta que sale */
+  content: "";
+  flex: 0 0 auto;
+  width: .55rem;
+  height: .55rem;
+  margin-left: auto;
+  border-right: 2px solid var(--mi-fire);
+  border-bottom: 2px solid var(--mi-fire);
+  transform: rotate(-45deg);
+  transition: transform .25s;
+}
+.mi-parada details[open] summary::after { transform: rotate(45deg); }
+.mi-parada summary:hover { background: rgba(255, 107, 43, .06); }
+.mi-parada summary:hover h3, .mi-parada details[open] h3 { color: var(--mi-fire); }
+
+.mi-parada__wp {                 /* el punto de paso */
+  position: absolute;
+  left: var(--mi-x);
+  top: 50%;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--mi-bg);
+  border: 2px solid #5A5A5A;
+  transition: border-color .35s .3s, box-shadow .35s .3s, background-color .25s;
+}
+.mi-parada.is-llegada .mi-parada__wp,
+.mi-ruta:not(.is-lista) .mi-parada__wp { border-color: var(--mi-fire); box-shadow: 0 0 .8rem var(--mi-glow); }
+.mi-parada details[open] .mi-parada__wp {
+  background: var(--mi-fire);
+  border-color: var(--mi-fire);
+  box-shadow: 0 0 0 .35rem rgba(255, 107, 43, .2), 0 0 1.3rem var(--mi-glow);
+  transition-delay: 0s;
+}
+.mi-ico.mi-parada__ico { flex: 0 0 auto; width: 1.6rem; height: 1.6rem; margin: 0; }
+.mi-parada__tit { min-width: 0; }
+.mi-parada__tit h3 {
+  display: inline;
+  margin: 0;
+  font: 600 1.35rem/1.2 var(--mi-font-head);
+  letter-spacing: .01em;
+  transition: color .2s;
+}
+.mi-parada__res { display: block; margin-top: .15rem; color: var(--mi-muted); font-size: .95rem; line-height: 1.45; }
+
+.mi-parada__mas {                /* la tarjeta que sale de la ruta */
+  position: relative;
+  margin: .25rem 0 .9rem 3.4rem;
+  padding: 1.15rem 1.25rem 1.05rem;
+  background: var(--mi-card);
+  border: .5px solid rgba(255, 107, 43, .55);
+  border-radius: var(--mi-r-m);
+  box-shadow: 0 0 1.6rem rgba(255, 107, 43, .16);
+}
+.mi-parada__mas p { margin: 0; font-size: 1rem; line-height: 1.6; }
+.mi-parada__mas::before,         /* el trazo de la cabecera: línea y punto */
+.mi-parada__mas::after { content: ""; position: absolute; top: -1px; }
+.mi-parada__mas::before {
+  left: 1.25rem;
+  width: 4.5rem;
+  height: 2px;
+  background: var(--mi-fire);
+  box-shadow: 0 0 .8rem var(--mi-glow);
+  transform-origin: left;
+}
+.mi-parada__mas::after {
+  left: 5.75rem;
+  width: .65rem;
+  height: .65rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--mi-bg);
+  border: 2px solid var(--mi-fire);
+}
+
+@media (min-width: 60rem) {
+  /* Escritorio: la ruta va por el centro y las paradas se alternan a cada lado */
+  .mi-ruta { margin-top: 3rem; }
+  .mi-ruta::before { left: calc(50% - 1px); }
+  .mi-ruta__lista { grid-template-columns: 1fr 1fr; gap: .35rem 0; align-items: start; }
+  .mi-parada:nth-child(odd) { grid-column: 1; --mi-x: calc(100% - 2rem); }
+  .mi-parada:nth-child(even) { grid-column: 2; --mi-x: 2rem; margin-top: 3.5rem; }
+  .mi-parada:nth-child(odd) summary { flex-direction: row-reverse; text-align: right; padding: .75rem 4.4rem .75rem .6rem; }
+  /* La flecha, pegada al título (no en el extremo de la columna) */
+  .mi-parada summary::after { margin-left: .4rem; }
+  .mi-parada:nth-child(odd) summary::after { margin: 0 .4rem 0 0; transform: rotate(135deg); }
+  .mi-parada:nth-child(odd) details[open] summary::after { transform: rotate(45deg); }
+  .mi-parada:nth-child(even) summary { padding-left: 4.4rem; }
+  .mi-parada:nth-child(odd) .mi-parada__mas { margin: .25rem 4.4rem .9rem 1.5rem; }
+  .mi-parada:nth-child(even) .mi-parada__mas { margin: .25rem 1.5rem .9rem 4.4rem; }
+  .mi-parada:nth-child(odd) .mi-parada__mas::before { left: auto; right: 1.25rem; transform-origin: right; }
+  .mi-parada:nth-child(odd) .mi-parada__mas::after { left: auto; right: 5.75rem; transform: translate(50%, -50%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mi-ruta__linea, .mi-ruta__brillo { transition: stroke-dashoffset .9s cubic-bezier(.4, .1, .3, 1); }
+  .mi-parada details[open] .mi-parada__mas { animation: mi-sale .5s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-parada details[open] .mi-parada__mas::before { animation: mi-trazo .5s .2s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-parada details[open] .mi-parada__mas::after { animation: mi-nodo .25s .65s both; }
+  .mi-parada summary { transition: background-color .2s; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 60rem) {
+  .mi-parada:nth-child(odd) details[open] .mi-parada__mas { animation-name: mi-sale-izq; }
+}
+@keyframes mi-sale {
+  from { opacity: 0; transform: translateX(-1.25rem); clip-path: inset(-2rem 100% -2rem -2rem); }
+  to { opacity: 1; transform: none; clip-path: inset(-2rem -2rem -2rem -2rem); }
+}
+@keyframes mi-sale-izq {
+  from { opacity: 0; transform: translateX(1.25rem); clip-path: inset(-2rem -2rem -2rem 100%); }
+  to { opacity: 1; transform: none; clip-path: inset(-2rem -2rem -2rem -2rem); }
+}
+
+/* Botón «Sonido» de la ruta de funciones (lo pone movimiento.js), como el «Voz» de Athenea */
+.mi-sonido {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin: .25rem 0 0;
+  padding: 0 1rem;
+  background: transparent;
+  color: var(--mi-muted);
+  border: .5px solid var(--mi-line);
+  border-radius: 999px;
+  font: 600 1rem/1 var(--mi-font-head);
+  letter-spacing: .04em;
+  cursor: pointer;
+}
+.mi-sonido[aria-pressed="true"] { color: var(--mi-fire); border-color: var(--mi-fire); }
+.mi-sonido[aria-pressed="false"] { text-decoration: line-through; }
+
 /* ---------- Sin cuenta ---------- */
 .mi-sincuenta {
   display: grid;
@@ -639,7 +915,6 @@ html:has(body.mi) {
   .mi-inicio__texto > :nth-child(3) { animation-delay: .16s; }
   .mi-inicio__texto > :nth-child(4) { animation-delay: .24s; }
   .mi-inicio__texto > :nth-child(5) { animation-delay: .3s; }
-  .mi-escena { animation: mi-sube .8s .2s cubic-bezier(.2, .7, .2, 1) both; }
   .mi-route--anim::before { transform-origin: left; animation: mi-trazo .8s .4s cubic-bezier(.2, .7, .2, 1) both; }
   .mi-route--anim::after { animation: mi-nodo .3s 1.1s both; }
 }
@@ -862,17 +1137,13 @@ html:has(body.mi) {
 
 /* ---------- Funciones: dos columnas también en el móvil ---------- */
 @media (max-width: 39.99rem) {
-  .mi-funciones { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
   .mi-card summary { padding: 1rem 2.1rem 1rem .9rem; }
   .mi-card summary::after { top: 1.15rem; right: .9rem; }
   .mi-card[open] summary::after { top: 1.4rem; }
   .mi-card h3 { font-size: 1.2rem; }
   .mi-card__resumen { font-size: .88rem; }
   .mi-card__mas { margin: 0 .9rem; }
-  .mi-card[open] { grid-column: 1 / -1; }
 }
-.mi-funciones li { transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
-.mi-funciones li:hover { transform: translateY(-4px); }
 
 /* ---------- Movimiento al llegar a cada bloque (lo activa movimiento.js) ---------- */
 @media (prefers-reduced-motion: no-preference) {
@@ -883,17 +1154,15 @@ html:has(body.mi) {
     transition-delay: calc(var(--i, 0) * 90ms);
   }
   .mi-mov [data-revela].is-visto { opacity: 1; transform: none; }
-  .mi-funciones li[data-revela].is-visto:hover { transform: translateY(-4px); transition-delay: 0s; }
 
   .mi-mov .mi-marca .mi-marca__mapa img { transform: scale(1.08); transition: transform 1.4s cubic-bezier(.2, .7, .2, 1); }
   .mi-mov .mi-marca.is-visto .mi-marca__mapa img { transform: none; }
   .mi-marca.is-visto .mi-wp { animation: mi-enciende .5s calc(.6s + var(--d)) both, mi-latido 2.4s calc(1.4s + var(--d)) infinite; }
 
-  [data-paralaje] { transform: translateY(var(--mi-par, 0px)); will-change: transform; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mi-wp { opacity: 1; }
-  .mi-funciones li:hover, .mi-toma:hover .mi-toma__marco { transform: none; }
+  .mi-toma:hover .mi-toma__marco { transform: none; }
 }
 @keyframes mi-enciende { from { opacity: 0; transform: translate(-50%, -50%) scale(.3); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @keyframes mi-latido {
@@ -1070,4 +1339,51 @@ html:has(body.mi) {
 .mi-asis__oculto {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- Athenea: pregunta sugerida según la sección que se está viendo ---------- */
+.mi-asis__op.is-sugerida { background: rgba(255, 107, 43, .16); box-shadow: 0 0 .9rem rgba(255, 107, 43, .25); }
+
+/* ---------- Athenea: bocadillo que asoma una sola vez en la portada ---------- */
+.mi-asis__aviso {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + .75rem);
+  display: flex;
+  align-items: flex-start;
+  width: min(17rem, calc(100vw - 2rem));
+  background: var(--mi-card);
+  border: .5px solid var(--mi-fire);
+  border-radius: var(--mi-r-m) var(--mi-r-m) .3rem var(--mi-r-m);
+  box-shadow: 0 .8rem 2rem rgba(0, 0, 0, .6), 0 0 1.2rem var(--mi-glow);
+}
+.mi-asis__aviso[hidden] { display: none; }
+.mi-asis__aviso-txt {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: .7rem 0 .7rem .9rem;
+  background: none;
+  border: 0;
+  color: var(--mi-text);
+  font: 400 .93rem/1.45 var(--mi-font-body);
+  text-align: left;
+  cursor: pointer;
+}
+.mi-asis__aviso-txt b { color: var(--mi-fire); font-weight: 600; }
+.mi-asis__aviso-x {
+  position: relative;
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.mi-asis__aviso-x::before, .mi-asis__aviso-x::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: .8rem; height: 2px; background: var(--mi-muted);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.mi-asis__aviso-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .mi-asis__aviso { animation: mi-sube .4s cubic-bezier(.2, .7, .2, 1) both; }
 }

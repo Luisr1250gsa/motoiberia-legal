@@ -15,10 +15,10 @@
 <meta property="og:title" content="MotoIberia: carreteras que se viven. Y se saborean.">
 <meta property="og:description" content="MotoIberia: rutas en moto por la Península Ibérica con navegación en CarPlay pensada para la moto. Rutas curadas, rutas con IA y comunidad. Gratis.">
 <meta property="og:url" content="https://motoiberia.asist-ia.org/">
-<meta property="og:image" content="https://motoiberia.asist-ia.org/img/og-motoiberia.jpg">
+<meta property="og:image" content="https://motoiberia.asist-ia.org/img/og-motoiberia-carplay.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="MotoIberia: rutas en moto por la Península Ibérica">
+<meta property="og:image:alt" content="MotoIberia: carreteras que se viven. Y se saborean. La navegación en la pantalla de CarPlay de una moto">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
@@ -57,9 +57,12 @@
       "name": "MotoIberia",
       "url": "https://motoiberia.asist-ia.org/",
       "description": "Rutas en moto por la Península Ibérica con navegación en CarPlay pensada para la moto.",
-      "image": "https://motoiberia.asist-ia.org/img/og-motoiberia.jpg",
+      "image": "https://motoiberia.asist-ia.org/img/og-motoiberia-carplay.jpg",
       "screenshot": "https://motoiberia.asist-ia.org/img/iphone-explorar.webp",
-      "video": { "@type": "VideoObject", "name": "MotoIberia en marcha", "description": "Un recorrido por la app, de Explorar a una ruta con IA.", "thumbnailUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha.webp", "contentUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha.mp4", "uploadDate": "2026-10-01" },
+      "video": [
+        { "@type": "VideoObject", "name": "MotoIberia en marcha", "description": "Un recorrido por la app, de Explorar a una ruta con IA.", "thumbnailUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha.webp", "contentUrl": "https://motoiberia.asist-ia.org/img/app-en-marcha-480.mp4", "uploadDate": "2026-10-01" },
+        { "@type": "VideoObject", "name": "MotoIberia en CarPlay", "description": "MotoIberia navegando en la pantalla de CarPlay de una moto, con la cuenta atrás hasta la rotonda y la música al lado.", "thumbnailUrl": "https://motoiberia.asist-ia.org/img/carplay-rodando.webp", "contentUrl": "https://motoiberia.asist-ia.org/img/carplay-rodando-960.mp4", "uploadDate": "2026-10-05" }
+      ],
       "operatingSystem": "iOS 15 o posterior",
       "applicationCategory": "TravelApplication",
       "inLanguage": "es",
@@ -88,7 +91,7 @@
 
 <header class="mi-top">
   <div class="mi-top__in">
-    <a class="mi-brand" href="./" aria-label="MotoIberia, inicio"><img src="img/logo-512.png" width="36" height="36" alt=""><span aria-hidden="true">Moto<b>Iberia</b></span></a>
+    <a class="mi-brand" href="./" aria-label="MotoIberia, inicio"><img src="img/logo-72.webp" width="36" height="36" alt=""><span aria-hidden="true">Moto<b>Iberia</b></span></a>
     <button class="mi-menu-btn" type="button" aria-expanded="false" aria-controls="mi-nav">Menú</button>
     <nav class="mi-nav" id="mi-nav" aria-label="Principal">
       <ul>
@@ -116,24 +119,31 @@
       <p class="mi-nota">App gratuita. Sin cuenta para empezar.</p>
     </div>
 
-    <div class="mi-escena">
-
-      <figure class="mi-iphone" data-paralaje="-0.06">
-        <div class="mi-iphone__in mi-iphone__in--video">
-          <video class="mi-video" width="600" height="1066" poster="img/app-en-marcha.webp" autoplay muted loop playsinline preload="auto" aria-label="Vídeo: un recorrido por la app, de Explorar a una ruta con IA">
-            <source src="img/app-en-marcha.mp4" type="video/mp4">
+    <div class="mi-dos">
+      <!-- La app en el iPhone: el vídeo arranca cuando la página ya ha cargado -->
+      <figure class="mi-movil">
+        <div class="mi-movil__in">
+          <video class="mi-video" width="480" height="852" poster="img/app-en-marcha.webp" muted loop playsinline controls preload="none" data-tras-carga aria-label="Vídeo: un recorrido por la app, de Explorar a una ruta con IA">
+            <source src="img/app-en-marcha-480.mp4" type="video/mp4">
           </video>
         </div>
       </figure>
 
       <!-- CarPlay real, en vista dividida: mapa, siguiente maniobra y música. -->
-      <figure class="mi-pantalla" data-paralaje="0.05">
+      <figure class="mi-pantalla mi-heroe">
         <div class="mi-pantalla__in">
-          <img src="img/carplay-cabecera.webp" width="1280" height="720" alt="MotoIberia en la pantalla de CarPlay de una moto, en vista dividida: el mapa con la ruta, la siguiente maniobra a 278 metros y la música" decoding="async" fetchpriority="high">
+          <img src="img/carplay-cabecera.webp" srcset="img/carplay-cabecera-960.webp 960w, img/carplay-cabecera.webp 1280w" sizes="(min-width: 60rem) 32rem, calc(100vw - 2.5rem)" width="1280" height="720" alt="MotoIberia en la pantalla de CarPlay de una moto, en vista dividida: el mapa con la ruta, la siguiente maniobra a 278 metros y la música" fetchpriority="high">
         </div>
       </figure>
-
     </div>
+
+    <!-- Línea de ruta: de la frase al iPhone y del iPhone a CarPlay; la dibuja movimiento.js -->
+    <svg class="mi-trazado" aria-hidden="true" focusable="false">
+      <path class="mi-trazado__brillo"/>
+      <path class="mi-trazado__linea"/>
+      <circle class="mi-trazado__wp mi-trazado__wp--1" r="7"/>
+      <circle class="mi-trazado__wp mi-trazado__wp--2" r="7"/>
+    </svg>
 
     <div class="mi-route mi-route--anim" aria-hidden="true"></div>
   </section>
@@ -171,8 +181,8 @@
       <!-- CarPlay en marcha, vista dividida. Vídeo sin sonido, en bucle; proporción real de la pantalla (1280×696). -->
       <figure class="mi-pantalla" data-revela>
         <div class="mi-pantalla__in mi-pantalla__in--video">
-          <video class="mi-video" width="1280" height="696" poster="img/carplay-rodando.webp" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo: MotoIberia navegando en la pantalla de CarPlay de una moto, con la cuenta atrás hasta la rotonda y la música al lado">
-            <source src="img/carplay-rodando.mp4" type="video/mp4">
+          <video class="mi-video" width="960" height="522" poster="img/carplay-rodando.webp" muted loop playsinline controls preload="none" aria-label="Vídeo: MotoIberia navegando en la pantalla de CarPlay de una moto, con la cuenta atrás hasta la rotonda y la música al lado">
+            <source src="img/carplay-rodando-960.mp4" type="video/mp4">
           </video>
         </div>
       </figure>
@@ -187,97 +197,97 @@
     <p class="mi-pk"><span>PK 02</span> Funciones</p>
     <h2 class="mi-h2" id="t-funciones">Lo que hace hoy Moto<b class="mi-i">Iberia</b></h2>
 
-    <ul class="mi-funciones">
-
-      <li data-revela style="--i:0">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a3.5 3.5 0 0 0 0-7h-4a3.5 3.5 0 0 1 0-7h6"/></svg>
-            <h3>Rutas curadas</h3>
-            <span class="mi-card__resumen">Rutas seleccionadas por toda la Península.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Las rutas largas vienen con etapas, para dividir el viaje en tramos.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:1">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="1.2"/></svg>
-            <h3>Rutas con IA</h3>
-            <span class="mi-card__resumen">Rutas circulares desde donde estás.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Para proponértela solo se usa tu ubicación aproximada. Necesita cuenta.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:2">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.4-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.6 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg>
-            <h3>Mi ruta</h3>
-            <span class="mi-card__resumen">Crea tu ruta tocando el mapa.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Marca los puntos tocando el mapa o buscando una dirección. La ruta sale siempre desde donde estás y la navegas al momento.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:3">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h12"/><path d="M7 8h4"/><path d="M14 10h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8.5L18.5 6"/></svg>
-            <h3>Gasolineras en ruta</h3>
-            <span class="mi-card__resumen">Ves las gasolineras de tu recorrido.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Las que te encuentras a lo largo de la ruta que llevas.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:0">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l5.5-5.5"/></svg>
-            <h3>Avisos de radar</h3>
-            <span class="mi-card__resumen">Radares fijos y de tramo de la DGT.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Radares fijos y de tramo de la DGT. No incluye radares municipales ni los de Cataluña, el País Vasco o Portugal.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:1">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
-            <h3>Modo noche</h3>
-            <span class="mi-card__resumen">Cambia solo.</span>
-          </summary>
-          <div class="mi-card__mas"><p>La app pasa sola a modo noche, sin que toques nada.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:2">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21 19"/></svg>
-            <h3>Comunidad</h3>
-            <span class="mi-card__resumen">Publicaciones, comentarios y quedadas.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Con moderación: cada publicación y comentario se puede denunciar, y puedes bloquear a quien quieras. Las denuncias se revisan en menos de 24 horas.</p></div>
-        </details>
-      </li>
-
-      <li data-revela style="--i:3">
-        <details class="mi-card">
-          <summary>
-            <svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.2L3.5 17.4a1.8 1.8 0 0 0 2.5 2.5l5.7-5.7a4 4 0 0 0 5.2-5.3l-2.4 2.4-2.1-.5-.5-2.1z"/></svg>
-            <h3>Garaje y mantenimiento</h3>
-            <span class="mi-card__resumen">Tus motos, al día.</span>
-          </summary>
-          <div class="mi-card__mas"><p>Guarda tus motos y recibe recordatorios de mantenimiento.</p></div>
-        </details>
-      </li>
-
-    </ul>
+    <!-- Las funciones como paradas de una ruta: la línea avanza al bajar y cada
+         parada se abre al tocarla. La traza movimiento.js; sin él, se ve una línea recta. -->
+    <div class="mi-ruta">
+      <svg class="mi-ruta__svg" aria-hidden="true" focusable="false">
+        <path class="mi-ruta__base"/>
+        <path class="mi-ruta__brillo"/>
+        <path class="mi-ruta__linea"/>
+      </svg>
+      <ol class="mi-ruta__lista">
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a3.5 3.5 0 0 0 0-7h-4a3.5 3.5 0 0 1 0-7h6"/></svg>
+              <span class="mi-parada__tit"><h3>Rutas curadas</h3> <span class="mi-parada__res">Rutas seleccionadas por toda la Península.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Las rutas largas vienen con etapas, para dividir el viaje en tramos.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4.5h-4.5"/><circle cx="12" cy="12" r="1.2"/></svg>
+              <span class="mi-parada__tit"><h3>Rutas con IA</h3> <span class="mi-parada__res">Rutas circulares desde donde estás.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Para proponértela solo se usa tu ubicación aproximada. Necesita cuenta.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.4-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.6 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg>
+              <span class="mi-parada__tit"><h3>Mi ruta</h3> <span class="mi-parada__res">Crea tu ruta tocando el mapa.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Marca los puntos tocando el mapa o buscando una dirección. La ruta sale siempre desde donde estás y la navegas al momento.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h12"/><path d="M7 8h4"/><path d="M14 10h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8.5L18.5 6"/></svg>
+              <span class="mi-parada__tit"><h3>Gasolineras en ruta</h3> <span class="mi-parada__res">Ves las gasolineras de tu recorrido.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Las que te encuentras a lo largo de la ruta que llevas.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12l5.5-5.5"/></svg>
+              <span class="mi-parada__tit"><h3>Avisos de radar</h3> <span class="mi-parada__res">Radares fijos y de tramo de la DGT.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Radares fijos y de tramo de la DGT. No incluye radares municipales ni los de Cataluña, el País Vasco o Portugal.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+              <span class="mi-parada__tit"><h3>Modo noche</h3> <span class="mi-parada__res">Cambia solo.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>La app pasa sola a modo noche, sin que toques nada.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2A5 5 0 0 1 21 19"/></svg>
+              <span class="mi-parada__tit"><h3>Comunidad</h3> <span class="mi-parada__res">Publicaciones, comentarios y quedadas.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Con moderación: cada publicación y comentario se puede denunciar, y puedes bloquear a quien quieras. Las denuncias se revisan en menos de 24 horas.</p></div>
+          </details>
+        </li>
+        <li class="mi-parada">
+          <details>
+            <summary>
+              <span class="mi-parada__wp" aria-hidden="true"></span>
+              <svg class="mi-ico mi-parada__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.2L3.5 17.4a1.8 1.8 0 0 0 2.5 2.5l5.7-5.7a4 4 0 0 0 5.2-5.3l-2.4 2.4-2.1-.5-.5-2.1z"/></svg>
+              <span class="mi-parada__tit"><h3>Garaje y mantenimiento</h3> <span class="mi-parada__res">Tus motos, al día.</span></span>
+            </summary>
+            <div class="mi-parada__mas"><p>Guarda tus motos y recibe recordatorios de mantenimiento.</p></div>
+          </details>
+        </li>
+      </ol>
+    </div>
   </section>
 
   <div class="mi-carril" aria-hidden="true"><span></span></div>

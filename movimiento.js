@@ -223,6 +223,76 @@
     }
   }
 
+  /* ---------- Capturas en grande ----------
+     Al pulsar una captura del carrusel se abre sola y entera, con su pie,
+     flechas (y deslizar en el móvil) para pasar a la siguiente y botón de
+     cerrar. Esc o tocar fuera también la cierran y el foco vuelve a la
+     captura. Sin ventana nativa (<dialog>) el carrusel se queda como está. */
+  function visor() {
+    var galeria = document.getElementById('galeria');
+    var dialogo = document.createElement('dialog');
+    if (!galeria || typeof dialogo.showModal !== 'function') return;
+    var tomas = Array.prototype.slice.call(galeria.querySelectorAll('.mi-toma'));
+    dialogo.className = 'mi-visor';
+    dialogo.setAttribute('aria-labelledby', 'mi-visor-pie');
+    dialogo.innerHTML =
+      '<button type="button" class="mi-visor__cerrar" aria-label="Cerrar"></button>' +
+      '<button type="button" class="mi-flecha mi-visor__ant" aria-label="Captura anterior"></button>' +
+      '<figure class="mi-visor__fig"><img alt=""><figcaption id="mi-visor-pie"></figcaption></figure>' +
+      '<button type="button" class="mi-flecha mi-flecha--sig mi-visor__sig" aria-label="Captura siguiente"></button>';
+    document.body.appendChild(dialogo);
+    var img = dialogo.querySelector('img');
+    var pie = dialogo.querySelector('figcaption');
+    var actual = 0, vuelta = null;
+
+    function muestra(i) {
+      actual = (i + tomas.length) % tomas.length;
+      var t = tomas[actual], o = t.querySelector('img');
+      img.src = o.currentSrc || o.src;
+      img.alt = o.alt;
+      pie.innerHTML = t.querySelector('figcaption').innerHTML;
+    }
+    function abre(i, boton) {
+      vuelta = boton;
+      muestra(i);
+      document.documentElement.classList.add('mi-sin-scroll');
+      dialogo.showModal();
+    }
+    tomas.forEach(function (t, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'mi-toma__ver';
+      b.setAttribute('aria-label', 'Ver en grande: ' + t.querySelector('img').alt);
+      b.addEventListener('click', function () { abre(i, b); });
+      t.querySelector('.mi-toma__marco').appendChild(b);
+    });
+    dialogo.querySelector('.mi-visor__cerrar').addEventListener('click', function () { dialogo.close(); });
+    dialogo.querySelector('.mi-visor__ant').addEventListener('click', function () { muestra(actual - 1); });
+    dialogo.querySelector('.mi-visor__sig').addEventListener('click', function () { muestra(actual + 1); });
+    // Tocar el fondo (fuera de la captura y de los botones) cierra
+    dialogo.addEventListener('click', function (e) { if (e.target === dialogo) dialogo.close(); });
+    dialogo.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); muestra(actual - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); muestra(actual + 1); }
+    });
+    // Deslizar en el móvil
+    var x0 = null;
+    dialogo.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    dialogo.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 50) muestra(actual + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    dialogo.addEventListener('close', function () {
+      document.documentElement.classList.remove('mi-sin-scroll');
+      // El carrusel queda en la última captura vista
+      galeria.scrollLeft = tomas[actual].offsetLeft - galeria.offsetLeft - 20;
+      var b = tomas[actual].querySelector('.mi-toma__ver');
+      (b || vuelta).focus({ preventScroll: true });
+    });
+  }
+
   /* ---------- Vídeos: botón de pausa, carga al acercarse ---------- */
   function videos() {
     document.querySelectorAll('video.mi-video').forEach(function (v) {
@@ -272,6 +342,7 @@
     trazado();
     ruta();
     videos();
+    visor();
 
     // Flechas del carrusel: una captura cada vez
     var galeria = document.getElementById('galeria');

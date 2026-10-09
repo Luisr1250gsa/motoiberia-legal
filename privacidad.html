@@ -51,7 +51,7 @@
 
   <div class="mi-hero">
     <h1>Política de Privacidad</h1>
-    <p class="mi-hero__meta">Última actualización: 8 de octubre de 2026</p>
+    <p class="mi-hero__meta">Última actualización: 9 de octubre de 2026</p>
     <div class="mi-route" aria-hidden="true"></div>
   </div>
 
@@ -75,9 +75,23 @@
   <table>
     <tr><th scope="col">Datos</th><th scope="col">Finalidad</th><th scope="col">Base jurídica</th></tr>
     <tr>
-      <td>Email y contraseña (almacenada cifrada)</td>
+      <td>Email y contraseña. La contraseña no se guarda en texto claro:
+          Supabase conserva solo un hash bcrypt con sal, una representación
+          diseñada para comprobarla sin guardar la original</td>
       <td>Crear y gestionar tu cuenta (autenticación mediante Supabase)</td>
       <td>Ejecución del contrato</td>
+    </tr>
+    <tr>
+      <td>Registros técnicos de seguridad que genera Supabase: de los eventos
+          de autenticación (registro, inicio y cierre de sesión, recuperación
+          y cambio de contraseña, entre otros) y de las peticiones al
+          servicio. Pueden incluir fecha y hora, tipo de evento, dirección IP,
+          identificador de tu cuenta y datos técnicos del navegador o
+          dispositivo</td>
+      <td>Detectar e investigar accesos indebidos y abusos, y diagnosticar
+          fallos del servicio. No guardamos copia en nuestra base de datos;
+          Supabase los conserva <strong>un máximo de 1 día</strong></td>
+      <td>Interés legítimo (proteger las cuentas y el servicio)</td>
     </tr>
     <tr>
       <td>Datos técnicos de tu conexión y de tu dispositivo (dirección IP,
@@ -90,8 +104,15 @@
       <td>Interés legítimo (seguridad del servicio)</td>
     </tr>
     <tr>
-      <td>Nombre de usuario, avatar, país y nivel</td>
-      <td>Tu perfil público en la comunidad</td>
+      <td>Nombre de usuario y foto de perfil</td>
+      <td>Identificarte en la comunidad. Cuando publicas, se muestran junto a
+          tu contenido, también a quien use la app sin cuenta</td>
+      <td>Ejecución del contrato</td>
+    </tr>
+    <tr>
+      <td>Nombre real, biografía, país y nivel (todos opcionales)</td>
+      <td>Completar tu perfil, si quieres. <strong>No se muestran a otros
+          usuarios</strong></td>
       <td>Ejecución del contrato</td>
     </tr>
     <tr>
@@ -117,14 +138,32 @@
       <td>Ejecución del contrato</td>
     </tr>
     <tr>
-      <td>Fotos de rutas (pueden incluir geolocalización), vídeos y
-          publicaciones</td>
-      <td>Funciones de comunidad. Son públicas y las publicas voluntariamente.
-          Ten en cuenta que, como en cualquier red social, <strong>una foto
-          publicada se puede abrir con su enlace directo sin necesidad de
-          tener cuenta</strong>; si la borras desde la app, deja de estar
+      <td>Fotos de rutas (pueden incluir geolocalización), vídeos,
+          publicaciones y comentarios</td>
+      <td>Mostrar el contenido que decides publicar en la comunidad. Es
+          público, también para quien use la app sin cuenta, y el contenido
+          que compartas puede revelar información sobre ti. Ten en cuenta
+          que, como en cualquier red social, <strong>una foto publicada se
+          puede abrir con su enlace directo sin necesidad de tener
+          cuenta</strong>; si la borras desde la app, deja de estar
           accesible</td>
-      <td>Consentimiento</td>
+      <td>Ejecución del contrato (prestarte las funciones de comunidad que
+          solicitas, conforme a los términos de uso)</td>
+    </tr>
+    <tr>
+      <td>Reacciones a publicaciones y votos a rutas</td>
+      <td>Contarlos y mostrarte los tuyos. Están asociados a tu cuenta, pero
+          <strong>no mostramos a los demás usuarios quién los ha
+          hecho</strong>: solo ven los totales</td>
+      <td>Ejecución del contrato</td>
+    </tr>
+    <tr>
+      <td>Denuncias de contenido o usuarios y la información necesaria para
+          examinarlas</td>
+      <td>Moderar la comunidad: retirar contenido o suspender cuentas que
+          incumplen las normas. Puedes oponerte (apartado 6)</td>
+      <td>Interés legítimo (proteger a las personas usuarias y evitar
+          abusos)</td>
     </tr>
     <tr>
       <td>Uso de la función de rutas con IA (contadores)</td>
@@ -162,7 +201,10 @@
   <p>Los datos de tu cuenta se alojan en la infraestructura de
   <strong>Supabase</strong> (base de datos PostgreSQL), en servidores situados
   <strong>en la Unión Europea (Irlanda)</strong>, con seguridad a nivel de fila:
-  tus datos privados solo son accesibles con tu propia sesión.</p>
+  los demás usuarios no pueden acceder a tus datos privados. Su acceso se
+  limita a ti y a las personas o sistemas autorizados cuando sea necesario
+  para prestar, mantener o proteger el servicio. De tu perfil, los demás
+  solo ven tu nombre de usuario y tu foto, junto a lo que tú publicas.</p>
 
   <p>Algunos proveedores técnicos de los que se enumeran abajo pueden tratar
   datos fuera del Espacio Económico Europeo. Cuando ocurre, se realiza con las
@@ -173,7 +215,7 @@
   <p><strong>No vendemos tus datos ni usamos publicidad de terceros.</strong>
   Empleamos únicamente proveedores técnicos necesarios para el servicio:</p>
   <ul>
-    <li><strong>Supabase</strong> — alojamiento de base de datos, autenticación y archivos.</li>
+    <li><strong>Supabase</strong> — alojamiento de base de datos, autenticación y archivos, y los registros técnicos de seguridad del apartado 2.</li>
     <li><strong>Mapbox</strong> — cálculo y recálculo de rutas. Recibe la
       secuencia de coordenadas de cada trayecto que calculas, junto con tu
       dirección IP, pero no tu nombre ni tu cuenta. Conviene que lo sepas con
@@ -201,7 +243,8 @@
 
   <h2>5. Cuánto tiempo conservamos tus datos</h2>
   <p>Mientras tu cuenta exista. Los contadores de uso de la función de IA se
-  conservan un máximo de 12 meses.</p>
+  conservan un máximo de 12 meses. Los registros técnicos de seguridad de
+  Supabase (apartado 2), un máximo de 1 día.</p>
   <p>Al eliminar tu cuenta, tus datos se borran de inmediato de la app y de
   nuestros servidores, y no se puede deshacer. Las rutas que hayas publicado
   se conservan sin tu nombre, para no dejar sin ellas a quien las tenga

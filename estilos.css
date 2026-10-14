@@ -1507,3 +1507,216 @@ html.mi-sin-scroll { overflow: hidden; }
 @media (prefers-reduced-motion: no-preference) {
   .mi-asis__aviso { animation: mi-sube .4s cubic-bezier(.2, .7, .2, 1) both; }
 }
+
+/* ==========================================================================
+   MATERIAL PROPIO · cabecera de cine, «Así se ve en tu moto», la cinta de
+   fotos y los tres tramos en vídeo. Todo servido desde esta web.
+   ========================================================================== */
+
+/* ---------- Cabecera de cine ----------
+   El póster va de fondo (uno por tamaño: cada dispositivo baja solo el
+   suyo) y el vídeo se pinta encima cuando arranca. */
+.mi-cine {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: calc(100vh - 3.75rem);
+  min-height: calc(100svh - 3.75rem);
+  max-height: 64rem;
+  overflow: hidden;
+}
+.mi-cine__fondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #0D0D0D url("img/ruta/portada-escritorio.webp") 50% 50% / cover no-repeat;
+}
+@media (max-width: 40rem) {
+  .mi-cine__fondo { background-image: url("img/ruta/portada-movil.webp"); }
+}
+.mi .mi-cine__video { position: absolute; inset: 0; background: transparent; }
+/* Velo: arriba deja ver, a la izquierda oscurece el titular y abajo se
+   funde con el fondo de la web para que no haya corte. */
+.mi-cine__fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(13, 13, 13, .45) 0, rgba(13, 13, 13, 0) 22%, rgba(13, 13, 13, .15) 55%, #0D0D0D 100%),
+    linear-gradient(90deg, rgba(13, 13, 13, .62) 0, rgba(13, 13, 13, .2) 55%, transparent 80%);
+  pointer-events: none;
+}
+.mi-cine .mi-vbtn { right: 1.25rem; bottom: 1.25rem; }
+.mi-cine__texto {
+  width: 100%;
+  max-width: var(--mi-ancho);
+  margin: 0 auto;
+  padding: 6rem 1.25rem clamp(4rem, 10vh, 6.5rem);
+  text-shadow: 0 2px 1.5rem rgba(0, 0, 0, .55);
+}
+.mi-cine__texto .mi-lead { color: var(--mi-text); }
+.mi-cine__texto .mi-nota { color: #CFCFCF; }
+.mi-cine__texto .mi-btn { text-shadow: none; }
+/* Invitación a bajar */
+.mi-cine__baja {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: -1.375rem;
+  border-radius: 50%;
+}
+.mi-cine__baja::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: .8rem;
+  height: .8rem;
+  margin-left: -.4rem;
+  border-right: 2px solid var(--mi-text);
+  border-bottom: 2px solid var(--mi-text);
+  transform: rotate(45deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mi-cine__baja::before { animation: mi-baja 2.2s ease-in-out infinite; }
+  .mi-cine__texto > * { animation: mi-sube .8s cubic-bezier(.2, .7, .2, 1) both; }
+  .mi-cine__texto > :nth-child(2) { animation-delay: .1s; }
+  .mi-cine__texto > :nth-child(3) { animation-delay: .2s; }
+  .mi-cine__texto > :nth-child(4) { animation-delay: .3s; }
+  .mi-cine__texto > :nth-child(5) { animation-delay: .38s; }
+}
+@keyframes mi-baja { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: .55; } 50% { transform: translateY(.4rem) rotate(45deg); opacity: 1; } }
+
+/* El titular de la sección del iPhone, algo menor que el de la cabecera */
+.mi-h1--dos { font-size: clamp(2.3rem, 6.5vw, 4rem); }
+
+/* ---------- CarPlay: «Así se ve en tu moto» ---------- */
+.mi-enmoto { margin: 0; width: 100%; max-width: 24rem; justify-self: center; }
+.mi-enmoto__in {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-l);
+  background: #0D0D0D;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, .45);
+}
+.mi-enmoto figcaption, .mi-tramo figcaption {
+  margin-top: .75rem;
+  color: var(--mi-muted);
+  font-size: .95rem;
+  line-height: 1.45;
+}
+.mi-enmoto figcaption b { color: var(--mi-text); font-weight: 600; }
+@media (min-width: 60rem) {
+  .mi-carplay:has(.mi-enmoto) {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+    grid-template-areas: "texto moto" "pantalla moto";
+    align-items: start;
+  }
+  .mi-carplay:has(.mi-enmoto) .mi-carplay__texto { grid-area: texto; }
+  .mi-carplay:has(.mi-enmoto) .mi-enmoto { grid-area: moto; align-self: center; }
+  .mi-carplay:has(.mi-enmoto) .mi-carplay__pantalla { grid-area: pantalla; }
+}
+
+/* ---------- Carreteras: la cinta de fotos ---------- */
+.mi-carreteras { padding-bottom: 0; }
+.mi-cinta { position: relative; margin-top: 1.75rem; }
+.mi-cinta__ventana {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.mi-cinta__pista { display: flex; width: max-content; }
+.mi-cinta__lista { display: flex; gap: .75rem; margin: 0; padding: 0 .75rem 0 0; list-style: none; }
+.mi-cinta__lista img {
+  display: block;
+  width: auto;
+  height: clamp(13rem, 26vw, 20rem);
+  border-radius: var(--mi-r-m);
+  background: var(--mi-card);
+}
+.mi-cinta__pausa {
+  display: block;
+  margin: .9rem 1.25rem 0 auto;
+  padding: .45rem .9rem;
+  background: var(--mi-card);
+  color: var(--mi-text);
+  border: .5px solid var(--mi-line);
+  border-radius: 999px;
+  font: 600 .95rem/1 var(--mi-font-head);
+  letter-spacing: .03em;
+  cursor: pointer;
+}
+.mi-cinta__pausa:hover { border-color: var(--mi-fire); }
+/* Con movimiento: avanza sola, muy despacio; se para con el ratón, al
+   enfocar algo dentro o con el botón */
+.mi-mov .mi-cinta__pista { animation: mi-cinta 110s linear infinite; }
+.mi-mov .mi-cinta:hover .mi-cinta__pista,
+.mi-mov .mi-cinta:focus-within .mi-cinta__pista,
+.mi-mov .mi-cinta.is-pausada .mi-cinta__pista { animation-play-state: paused; }
+@keyframes mi-cinta { to { transform: translateX(-50%); } }
+/* Sin movimiento (o sin JavaScript): una fila que se desliza a mano */
+html:not(.mi-mov) .mi-cinta__ventana {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-mask-image: none;
+          mask-image: none;
+  padding: 0 1.25rem .5rem;
+}
+html:not(.mi-mov) .mi-cinta__lista li { scroll-snap-align: start; }
+html:not(.mi-mov) .mi-cinta__lista[aria-hidden],
+html:not(.mi-mov) .mi-cinta__pausa { display: none; }
+
+/* ---------- Carreteras: tres tramos en vídeo ---------- */
+.mi-tramos-sec { padding-top: clamp(2rem, 5vw, 3rem); }
+.mi-tramos {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(14rem, 78%);
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0 .5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+@media (min-width: 48rem) {
+  .mi-tramos { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
+}
+.mi-tramo { scroll-snap-align: start; }
+.mi-tramo figure { margin: 0; }
+.mi-tramo__in {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: .5px solid var(--mi-line);
+  border-radius: var(--mi-r-l);
+  background: #0D0D0D;
+}
+.mi-tramo figcaption b {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--mi-text);
+  font: 700 1.35rem/1.1 var(--mi-font-head);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.mi-tramo figcaption b::before {
+  content: "";
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  margin: 0 .5rem .15rem 0;
+  border-radius: 50%;
+  background: var(--mi-fire);
+  box-shadow: 0 0 .6rem var(--mi-glow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .mi-tramo__in .mi-video { transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+  .mi-tramo:hover .mi-tramo__in .mi-video { transform: scale(1.04); }
+}

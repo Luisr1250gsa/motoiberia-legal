@@ -26,10 +26,13 @@
 
 <link rel="preload" href="fonts/rajdhani-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/ruta/portada-escritorio.webp" media="(min-width: 40.01rem)" fetchpriority="high">
+<link rel="preload" as="image" href="img/ruta/portada-movil.webp" media="(max-width: 40rem)" fetchpriority="high">
 <link rel="stylesheet" href="estilos.css">
 <script src="menu.js"></script>
 <script src="asistente.js" defer></script>
 <script src="movimiento.js" defer></script>
+<script src="rodando.js" defer></script>
 
 <!-- Datos estructurados: la marca como responsable y la app gratuita, sin valoraciones ni reseñas. -->
 <script type="application/ld+json">
@@ -97,6 +100,7 @@
       <ul>
         <li><a href="./" aria-current="page">Inicio</a></li>
         <li><a href="./#carplay">CarPlay</a></li>
+        <li><a href="./#carreteras">Carreteras</a></li>
         <li><a href="./#funciones">Funciones</a></li>
         <li><a href="./#la-app">La app</a></li>
         <li><a href="./#sin-cuenta">Sin cuenta</a></li>
@@ -108,15 +112,35 @@
 
 <main id="contenido" class="mi-portada">
 
-  <!-- ===================== CABECERA ===================== -->
-  <section class="mi-sec mi-inicio" id="inicio" aria-labelledby="t-inicio">
-
-    <div class="mi-inicio__texto">
+  <!-- ===================== CABECERA DE CINE =====================
+       Vídeo propio a pantalla completa, sin sonido y en bucle: las curvas
+       desde el dron en escritorio y los túneles de roca en el móvil. Lo
+       primero que se pinta es el póster; el vídeo carga cuando la página ya
+       ha cargado (movimiento.js) y no arranca con «reducir movimiento» ni con
+       el ahorro de datos (rodando.js). -->
+  <section class="mi-cine" id="inicio" aria-labelledby="t-inicio">
+    <div class="mi-cine__fondo">
+      <video class="mi-video mi-cine__video" width="1920" height="1080" muted loop playsinline preload="none" data-tras-carga aria-label="Vídeo sin sonido: una carretera de curvas encadenadas entre pinos, vista desde el dron">
+        <source src="img/ruta/portada-movil.mp4" type="video/mp4" media="(max-width: 40rem)">
+        <source src="img/ruta/portada-escritorio.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="mi-cine__texto">
       <p class="mi-eyebrow">Rutas en moto por la Península Ibérica</p>
       <h1 class="mi-h1" id="t-inicio"><span>Carreteras que se viven.</span> <span>Y se saborean.</span></h1>
       <p class="mi-lead">Rutas por la Península y navegación en CarPlay pensada para la moto.</p>
       <p><span class="mi-btn">Próximamente en App Store</span></p>
       <p class="mi-nota">App gratuita. Sin cuenta para empezar.</p>
+    </div>
+    <a class="mi-cine__baja" href="#la-app-en-marcha" aria-label="Bajar a la app"></a>
+  </section>
+
+  <!-- ===================== DEL BOLSILLO A LA MOTO ===================== -->
+  <section class="mi-sec mi-inicio" id="la-app-en-marcha" aria-labelledby="t-bolsillo">
+
+    <div class="mi-inicio__texto">
+      <h2 class="mi-h1 mi-h1--dos" id="t-bolsillo"><span>Del bolsillo</span> <span>a tu moto.</span></h2>
+      <p class="mi-lead">Eliges la ruta en el iPhone y la navegas en la pantalla de CarPlay, con el móvil bloqueado.</p>
     </div>
 
     <div class="mi-dos">
@@ -178,8 +202,18 @@
         <p><a class="mi-enlace" href="soporte.html#carplay">Qué necesitas para CarPlay</a></p>
       </div>
 
+      <!-- Lo mismo, visto desde el manillar: MotoIberia en el Carpuride, en un puerto. -->
+      <figure class="mi-enmoto" data-revela>
+        <div class="mi-enmoto__in">
+          <video class="mi-video" width="720" height="960" poster="img/ruta/en-tu-moto.webp" muted loop playsinline controls preload="none" aria-label="Vídeo sin sonido: desde el manillar de una moto en un puerto de montaña, MotoIberia en la pantalla de CarPlay indica girar a la derecha en 11,4 km">
+            <source src="img/ruta/en-tu-moto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <figcaption><b>Así se ve en tu moto.</b> Rodando, con el iPhone bloqueado en el bolsillo.</figcaption>
+      </figure>
+
       <!-- CarPlay en marcha, vista dividida. Vídeo sin sonido, en bucle; proporción real de la pantalla (1280×696). -->
-      <figure class="mi-pantalla" data-revela>
+      <figure class="mi-pantalla mi-carplay__pantalla" data-revela>
         <div class="mi-pantalla__in mi-pantalla__in--video">
           <video class="mi-video" width="960" height="522" poster="img/carplay-rodando.webp" muted loop playsinline controls preload="none" aria-label="Vídeo: MotoIberia navegando en la pantalla de CarPlay de una moto, con la cuenta atrás hasta la rotonda y la música al lado">
             <source src="img/carplay-rodando-960.mp4" type="video/mp4">
@@ -192,9 +226,94 @@
 
   <div class="mi-carril" aria-hidden="true"><span></span></div>
 
+  <!-- ===================== CARRETERAS =====================
+       Material propio: fotos y vídeos rodados con nuestra moto. La cinta
+       avanza sola despacio (se para al pasar el ratón, al enfocarla o con el
+       botón) y con «reducir movimiento» es una fila que se desliza a mano.
+       La segunda copia de la lista solo sirve para que el bucle no tenga
+       costura: los lectores de pantalla no la leen. -->
+  <section class="mi-sec mi-carreteras" id="carreteras" aria-labelledby="t-carreteras">
+    <p class="mi-pk"><span>PK 02</span> Carreteras</p>
+    <h2 class="mi-h2" id="t-carreteras">Hechas para rodarlas.</h2>
+    <p class="mi-p">Puertos de curvas, pistas de montaña y atardeceres de la Península. Lo que se ve aquí lo hemos rodado nosotros, con nuestra moto.</p>
+  </section>
+
+  <div class="mi-cinta" data-revela>
+    <div class="mi-cinta__ventana">
+    <div class="mi-cinta__pista">
+      <ul class="mi-cinta__lista" aria-label="Fotos de nuestras rutas">
+        <li><img src="img/ruta/foto-zigzag-horquillas.webp" width="1280" height="720" alt="Horquillas encadenadas entre pinos, desde el dron" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-pista-frontal.webp" width="405" height="720" alt="La moto de frente en una pista de tierra" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-molino-castillo-atardecer.webp" width="1280" height="720" alt="Un molino de viento a contraluz al atardecer" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-teruel-roja.webp" width="405" height="720" alt="Carretera junto a una pared de roca roja" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-castillo.webp" width="1280" height="720" alt="Un castillo sobre la loma, con los molinos detrás" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-tunel-salida.webp" width="405" height="720" alt="La moto saliendo de un túnel excavado en la roca" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-atardecer-arrozal.webp" width="540" height="720" alt="La moto aparcada junto a los arrozales al atardecer" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-dron-curvas.webp" width="405" height="720" alt="Curvas de montaña vistas desde arriba" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-molino.webp" width="1280" height="720" alt="Molinos blancos sobre la cresta de la sierra" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-teruel-anochecer.webp" width="405" height="720" alt="Rodando al anochecer por una carretera de sierra" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-pista-montana.webp" width="405" height="720" alt="Una pista de montaña bajo el cielo azul" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-atardecer-sierra.webp" width="540" height="720" alt="Puesta de sol sobre la sierra" loading="lazy" decoding="async"></li>
+      </ul>
+      <ul class="mi-cinta__lista" aria-hidden="true">
+        <li><img src="img/ruta/foto-zigzag-horquillas.webp" width="1280" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-pista-frontal.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-molino-castillo-atardecer.webp" width="1280" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-teruel-roja.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-castillo.webp" width="1280" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-tunel-salida.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-atardecer-arrozal.webp" width="540" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-dron-curvas.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-molino.webp" width="1280" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-teruel-anochecer.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-pista-montana.webp" width="405" height="720" alt="" loading="lazy" decoding="async"></li>
+        <li><img src="img/ruta/foto-atardecer-sierra.webp" width="540" height="720" alt="" loading="lazy" decoding="async"></li>
+      </ul>
+    </div>
+    </div>
+    <button type="button" class="mi-cinta__pausa" aria-pressed="false">Pausar fotos</button>
+  </div>
+
+  <div class="mi-sec mi-tramos-sec">
+    <ul class="mi-tramos" aria-label="Tres vídeos cortos de nuestras rutas">
+      <li class="mi-tramo" data-revela>
+        <figure>
+          <div class="mi-tramo__in">
+            <video class="mi-video" width="540" height="720" poster="img/ruta/tarjeta-tarde.webp" muted loop playsinline controls preload="none" aria-label="Vídeo sin sonido: la moto rodando al anochecer por una carretera de sierra">
+              <source src="img/ruta/tarjeta-tarde.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption><b>Asfalto</b> Al caer la tarde, por la sierra.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-tramo" data-revela>
+        <figure>
+          <div class="mi-tramo__in">
+            <video class="mi-video" width="540" height="720" poster="img/ruta/tarjeta-pista.webp" muted loop playsinline controls preload="none" aria-label="Vídeo sin sonido: una pista de tierra entre montañas, vista desde el manillar">
+              <source src="img/ruta/tarjeta-pista.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption><b>Tierra</b> Pistas de montaña, a ritmo tranquilo.</figcaption>
+        </figure>
+      </li>
+      <li class="mi-tramo" data-revela>
+        <figure>
+          <div class="mi-tramo__in">
+            <video class="mi-video" width="540" height="720" poster="img/ruta/tarjeta-molinos.webp" muted loop playsinline controls preload="none" aria-label="Vídeo sin sonido: un molino de viento a contraluz al atardecer, desde el dron">
+              <source src="img/ruta/tarjeta-molinos.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption><b>Llanura</b> Molinos al atardecer.</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mi-carril" aria-hidden="true"><span></span></div>
+
   <!-- ===================== FUNCIONES ===================== -->
   <section class="mi-sec" id="funciones" aria-labelledby="t-funciones">
-    <p class="mi-pk"><span>PK 02</span> Funciones</p>
+    <p class="mi-pk"><span>PK 03</span> Funciones</p>
     <h2 class="mi-h2" id="t-funciones">Lo que hace hoy Moto<b class="mi-i">Iberia</b></h2>
 
     <!-- Las funciones como paradas de una ruta: la línea avanza al bajar y cada
@@ -294,7 +413,7 @@
 
   <!-- ===================== LA APP POR DENTRO ===================== -->
   <section class="mi-sec" id="la-app" aria-labelledby="t-la-app">
-    <p class="mi-pk"><span>PK 03</span> La app por dentro</p>
+    <p class="mi-pk"><span>PK 04</span> La app por dentro</p>
     <div class="mi-galeria__cab">
       <h2 class="mi-h2" id="t-la-app">Pantallas reales, sin retoques.</h2>
       <div class="mi-galeria__flechas">
@@ -354,7 +473,7 @@
   <section class="mi-sec" id="sin-cuenta" aria-labelledby="t-sin-cuenta">
     <div class="mi-sincuenta" data-revela>
       <div>
-        <p class="mi-pk"><span>PK 04</span> Sin cuenta</p>
+        <p class="mi-pk"><span>PK 05</span> Sin cuenta</p>
         <h2 class="mi-h2" id="t-sin-cuenta">Sin cuenta para empezar.</h2>
       </div>
       <div>

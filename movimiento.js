@@ -12,6 +12,7 @@
    vídeos llevan los controles del navegador. */
 (function () {
   var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ahorro = !!(navigator.connection && navigator.connection.saveData);
   if (!quieto && 'IntersectionObserver' in window) {
     document.documentElement.classList.add('mi-mov');
   }
@@ -38,7 +39,7 @@
      margen, entra por arriba del iPhone y sigue hasta CarPlay. */
   function trazado() {
     var svg = document.querySelector('.mi-trazado');
-    var fin = document.querySelector('.mi-h1 span:last-child');
+    var fin = document.querySelector('.mi-inicio .mi-h1 span:last-child');
     var movil = document.querySelector('.mi-movil');
     var heroe = document.querySelector('.mi-heroe');
     if (!svg || !fin || !movil || !heroe || !document.createRange) return;
@@ -301,8 +302,9 @@
       b.type = 'button';
       b.className = 'mi-vbtn';
       v.parentNode.appendChild(b);
-      // Pausado a mano o con «reducir movimiento»: no arranca solo
-      var parado = quieto;
+      // Pausado a mano, con «reducir movimiento» o con el ahorro de datos
+      // del navegador: no arranca solo (queda el póster y el botón)
+      var parado = quieto || ahorro;
       // El de la cabecera no compite con lo primero que se ve: espera a la carga
       var espera = v.hasAttribute('data-tras-carga') && document.readyState !== 'complete';
       var visible = false;

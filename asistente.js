@@ -21,7 +21,7 @@
   var CHAT_LIBRE = false;
   var URL_ATHENEA = '';
   var LIMITE_DIA = 10;
-  var CORREO = '<a href="mailto:AsesoramientoAsistia@outlook.es">correo</a>';
+  var CORREO = '<a href="mailto:soporte@asist-ia.org">correo</a>';
   var PREGUNTAS = [
     ['¿Qué necesito para usar CarPlay?',
      'Un iPhone con iOS 15 o posterior y una pantalla compatible con CarPlay, de serie o de posventa (por ejemplo, las pantallas para moto). Que sea con cable o inalámbrica depende de tu pantalla, no de la app. La primera vez, abre la app en el iPhone y permite la ubicación: el coche no puede pedir ese permiso. Después, la navegación va en la pantalla y el iPhone puede ir bloqueado en el bolsillo.'],
@@ -295,7 +295,7 @@
         var limpio = resto.replace(/[.)]+$/, '');
         return '<a href="https://' + limpio + '" target="_blank" rel="noopener">' + limpio + '</a>' + resto.slice(limpio.length);
       })
-      .replace(/\b(AsesoramientoAsistia@outlook\.es)\b/g, '<a href="mailto:$1">$1</a>');
+      .replace(/\b(soporte@asist-ia\.org)\b/g, '<a href="mailto:$1">$1</a>');
   }
 
   document.addEventListener('DOMContentLoaded', function () {
